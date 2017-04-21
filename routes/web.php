@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('pages.home');
+    return view('site.pages.home');
 });
+
+Route::resource('categories', web\CategoryController::class);
+Route::resource('companies', web\CompanyController::class);
+Route::resource('products', web\ProductController::class);
+Route::resource('phonenumbers', web\PhoneNumberController::class);
+Route::resource('emails', web\EmailController::class);
+Route::resource('productimages', web\ProductImageController::class);
+Route::resource('productratings', web\ProductRatingController::class);
+Route::resource('maplocations', web\MapLocationController::class);
