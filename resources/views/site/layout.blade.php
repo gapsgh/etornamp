@@ -3,21 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{asset('/assets/ico/apple-touch-icon-144-precomposed.png')}}">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{asset('/assets/ico/apple-touch-icon-114-precomposed.png')}}">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{asset('/assets/ico/apple-touch-icon-72-precomposed.png')}}">
-	<link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
-	<link rel="shortcut icon" href="{{asset('/assets/ico/favicon.png')}}">
-	<title>Welcome To Promotegh.com</title>
-
-	<link href="{{asset('/assets/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-
-	<link href="{{asset('/assets/css/style.css')}}" rel="stylesheet">
-
-	<link href="{{asset('/assets/css/owl.carousel.css')}}" rel="stylesheet">
-	<link href="{{asset('/assets/css/owl.theme.css')}}" rel="stylesheet">
-
+	@include('site.links')
+	
+	<title>@yield('title', 'Promotegh.com')</title>
 
 <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -33,37 +21,11 @@
 </head>
 <body>
 	<div id="wrapper">
-		<div class="header">
-			<nav class="navbar   navbar-site navbar-default" role="navigation">
-				<div class="container">
-					<div class="navbar-header">
-						<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
-							<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
-							<a href="#" class="navbar-brand logo logo-title">
-
-								<span class="logo-icon">
-								<img src="{{asset('/assets/ico/logot.png')}}">
-								</span>
-								{{-- Promote<span>GH.com </span>  --}}
-							</a>
-					</div>
-								<div class="navbar-collapse collapse">
-									<ul class="nav navbar-nav navbar-right">
-										<li><a href="">Login</a></li>
-										<li><a href="">Signup</a></li>
-										<li class="postadd">
-											<a class="btn btn-block   btn-border btn-post btn-danger" href="#">Post Free Add</a>
-										</li>
-									</ul>
-								</div>
-
-							</div>
-
-						</nav>
-					</div>
+		@include('site.header')
 
 					<div class="conainner">
 						@yield('content')
+
 					</div>
 
 					<div class="page-info hasOverly" style="background: url({{asset('/images/bg.jpg')}}); background-size:cover">
@@ -180,5 +142,38 @@
 	<script type="text/javascript" src="{{asset('/assets/plugins/autocomplete/jquery.autocomplete.js')}}"></script>
 	<script type="text/javascript" src="{{asset('/assets/plugins/autocomplete/usastates.js')}}"></script>
 	<script type="text/javascript" src="{{asset('/assets/plugins/autocomplete/autocomplete-demo.js')}}"></script>
+	<script src="{{asset('/assets/js/fileinput.min.js')}}" type="text/javascript"></script>
+	
+    <script type="text/javascript" src="{{asset('/assets/js/materialize.min.js')}}"></script>
+
+	<script type="text/javascript">
+		function initialize_image_input(input_id) {
+        $("#"+input_id).fileinput({
+            'showUpload':false,
+            'maxFileSize':2000,
+            'allowedFileTypes':['image'],
+            'allowedFileExtensions':['jpg', 'png'],
+            'allowedPreviewTypes':['image'],
+            'previewFileType':'image'
+        });
+    }
+	</script>
+	<script type="text/javascript">
+    // Toast Notification
+    $(window).load(function() {
+        setTimeout(function() {
+            Materialize.toast('<span>Hiya! I am a toast.</span>', 1500);
+        }, 3000);
+        setTimeout(function() {
+            Materialize.toast('<span>You can swipe me too!</span>', 355555000);
+        }, 5500);
+        setTimeout(function() {
+            Materialize.toast('<span>You have new order.</span><a class="btn-flat yellow-text" href="#">Read<a>', 3000);
+        }, 18000);
+    });
+    
+    </script>
+	@yield('scripts')
+
 </body>
 </html>

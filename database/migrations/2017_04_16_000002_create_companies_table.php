@@ -22,6 +22,7 @@ class CreateCompaniesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('logo');
             $table->string('working_hours');
+            $table->string('other_description');
             $table->timestamps();
         });
     }

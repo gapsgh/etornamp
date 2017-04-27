@@ -1,5 +1,8 @@
 @extends('site.layout')
 
+@section('title')
+	Welcome to Promotegh.com
+@stop
 @section('content')
 <div class="intro" style="background-image: url(images/made-in-ghana1.jpg);">
 <div class="dtable hw100">

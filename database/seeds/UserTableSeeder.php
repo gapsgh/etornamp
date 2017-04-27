@@ -21,7 +21,8 @@ class UserTableSeeder extends Seeder
         foreach (range(1,20) as $key => $value) {
         	# code...
         	$users[] = [
-        		'name' => $faker->name,
+                'name' => $faker->name,
+        		'email' => $faker->email,
         		'password' => $faker->password,
         		'created_at' => new DateTime,
         		'updated_at' => new DateTime,

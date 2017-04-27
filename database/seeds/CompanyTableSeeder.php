@@ -26,7 +26,8 @@ class CompanyTableSeeder extends Seeder
         		'address' => $faker->address,
         		'user_id' => rand(1,20),
         		'logo' => str_random(3).".jpg",
-        		'working_hours' => "From : ".rand(6,9)."AM To : ".rand(5,10)."PM",
+                'working_hours' => "From : ".rand(6,9)."AM To : ".rand(5,10)."PM",
+        		'other_description' => "Some Description",
         		'created_at' => new DateTime,
         		'updated_at' => new DateTime,
         	];

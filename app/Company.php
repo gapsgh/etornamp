@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
     //
+    protected $fillable = [
+        'name',
+        'registration_number',
+        'address',
+        'user_id',
+        'logo',
+        'working_hours',
+        'other_description'
+    ];
     
     public function email(){
     	return $this->hasMany('App\Email');

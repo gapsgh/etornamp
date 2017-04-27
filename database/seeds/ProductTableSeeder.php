@@ -22,14 +22,17 @@ class ProductTableSeeder extends Seeder
         	# code...
         	$cats = [2,3,4,6,7,8];
         	$products[] = [
-        		'name' => "Product ".$key,
+                'name' => "Product ".$key,
+        		'description' => "Product  Description",
         		'single_price' => $faker->numberBetween(1,5000),
         		'bulk_price' => $faker->numberBetween(1000,80000),
-        		'bonus_percentage' => rand(1,20),
+                'bonus_percentage_single' => rand(1,20),
+        		'bonus_percentage_bulk' => rand(1,20),
         		'active_status' => 1,
         		'category_id' => $cats[array_rand($cats)],
         		'company_id' => rand(1,20),
-        		'certification_status' => rand(0,1),
+                'certification_status' => rand(0,1),
+        		'premiun_status' => rand(0,1),
         		'created_at' => new DateTime,
         		'updated_at' => new DateTime,
         	];
