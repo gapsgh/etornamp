@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\Company;
+use App\Category;
 use App\ProductImage;
+use Image;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -33,7 +36,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('site.admin.products.create');
+        $categoris = Category::get()->toArray();
+        // dd($categoris);
+        return view('site.admin.products.create',compact('categoris'));
     }
 
     /**
@@ -45,7 +50,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-        // dd($request->file());
+        // dd($request->all());
         //Get all the request field data
         $fields = $request->all();
 
@@ -80,8 +85,7 @@ class ProductController extends Controller
         if(empty($fields['premiun_status'])){
             $fields['premiun_status'] = 0;
         }
-
-
+        
 
         //Add the product 
         $product = Product::create($fields);
@@ -90,11 +94,14 @@ class ProductController extends Controller
             $product_id = $product->id;
         }
 
-        // Add Company Logo
+        // Add Product Images
+        // 
         $Product_Image = $request->file('product_image1');
         $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
         $destination_path = base_path() . '/public/uploads/product_images/';
+        $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
         $Product_Image->move($destination_path, $filename);
+        Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
         $image_data=[
                     'image' => $filename,
                     'priority' => 1,
@@ -107,6 +114,8 @@ class ProductController extends Controller
             $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
             $destination_path = base_path() . '/public/uploads/product_images/';
             $Product_Image->move($destination_path, $filename);
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
             $image_data=[
                         'image' => $filename,
                         'priority' => 2,
@@ -119,6 +128,8 @@ class ProductController extends Controller
             $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
             $destination_path = base_path() . '/public/uploads/product_images/';
             $Product_Image->move($destination_path, $filename);
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
             $image_data=[
                         'image' => $filename,
                         'priority' => 3,
@@ -131,6 +142,8 @@ class ProductController extends Controller
             $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
             $destination_path = base_path() . '/public/uploads/product_images/';
             $Product_Image->move($destination_path, $filename);
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
             $image_data=[
                         'image' => $filename,
                         'priority' => 4,
@@ -139,7 +152,16 @@ class ProductController extends Controller
             ProductImage::create($image_data);
         }
 
-        return view('site.admin.products.create')->with('success_message','Product Added!!');
+
+        //if the user selects to go back to listing page or not
+        if(empty($fields['return_to_page'])){
+            return redirect('products/create/success');
+        }else{
+            return redirect('products/create')->with('success_message','Product Added!!');
+        }
+        
+
+
     }
 
     /**
@@ -152,6 +174,12 @@ class ProductController extends Controller
     {
         //
     }
+    
+    public function savesuccess()
+    {
+        //
+        return view('site.admin.products.save_success');
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -161,7 +189,19 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::where('id',$id)->get()->toArray();
+        $categoris = Category::get()->toArray();
+
+        if ( is_null($product) or empty($product) ) {
+          App::abort(404);
+        }
+        $product = $product[0];
+        $product_id = trim($product['id']);
+
+        $product_images = ProductImage::where('product_id',$product_id)->get()->toArray();
+       // dd($product_images);
+        
+        return view('site.admin.products.edit',compact('product','product_images','categoris'));
     }
 
     /**
@@ -173,7 +213,114 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         //Get all the request field data
+        $fields = $request->all();
+
+        $product_id = $id;
+
+        $product = Product::find($id);
+        $product->update($fields);
+
+        // Add Product Images
+        // 
+        if(!empty($request->file('product_image1'))  and !empty($fields['product_image1_image'])){
+            $Product_Image = $request->file('product_image1');
+            $image_name = explode('.' ,$fields['product_image1_image'] )[0];
+            $filename = $image_name.'.' . $Product_Image->getClientOriginalExtension();
+            $destination_path = base_path() . '/public/uploads/product_images/';
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            $Product_Image->move($destination_path, $filename);
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+           
+        }elseif(!empty($request->file('product_image1'))  and empty($fields['product_image1_image'])){
+            $Product_Image = $request->file('product_image1');
+            $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
+            $destination_path = base_path() . '/public/uploads/product_images/';
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            $Product_Image->move($destination_path, $filename);
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+            $image_data=[
+                        'image' => $filename,
+                        'priority' => 1,
+                        'product_id' => $product_id
+                        ];
+            ProductImage::create($image_data);
+        }
+
+        if(!empty($request->file('product_image2'))  and !empty($fields['product_image2_image'])){
+            $Product_Image = $request->file('product_image2');
+            $image_name = explode('.' ,$fields['product_image2_image'] )[0];
+            $filename = $image_name.'.' . $Product_Image->getClientOriginalExtension();
+            $destination_path = base_path() . '/public/uploads/product_images/';
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            $Product_Image->move($destination_path, $filename);
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+           
+        }elseif(!empty($request->file('product_image2'))  and empty($fields['product_image2_image'])){
+            $Product_Image = $request->file('product_image2');
+            $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
+            $destination_path = base_path() . '/public/uploads/product_images/';
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            $Product_Image->move($destination_path, $filename);
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+            $image_data=[
+                        'image' => $filename,
+                        'priority' => 2,
+                        'product_id' => $product_id
+                        ];
+            ProductImage::create($image_data);
+        }
+
+        if(!empty($request->file('product_image3'))  and !empty($fields['product_image3_image'])){
+            $Product_Image = $request->file('product_image3');
+            $image_name = explode('.' ,$fields['product_image3_image'] )[0];
+            $filename = $image_name.'.' . $Product_Image->getClientOriginalExtension();
+            $destination_path = base_path() . '/public/uploads/product_images/';
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            $Product_Image->move($destination_path, $filename);
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+           
+        }elseif(!empty($request->file('product_image3'))  and empty($fields['product_image3_image'])){
+            $Product_Image = $request->file('product_image3');
+            $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
+            $destination_path = base_path() . '/public/uploads/product_images/';
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            $Product_Image->move($destination_path, $filename);
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+            $image_data=[
+                        'image' => $filename,
+                        'priority' => 3,
+                        'product_id' => $product_id
+                        ];
+            ProductImage::create($image_data);
+        }
+
+        if(!empty($request->file('product_image4'))  and !empty($fields['product_image4_image'])){
+            $Product_Image = $request->file('product_image4');
+            $image_name = explode('.' ,$fields['product_image4_image'] )[0];
+            $filename = $image_name.'.' . $Product_Image->getClientOriginalExtension();
+            $destination_path = base_path() . '/public/uploads/product_images/';
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            $Product_Image->move($destination_path, $filename);
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+           
+        }elseif(!empty($request->file('product_image4'))  and empty($fields['product_image4_image'])){
+            $Product_Image = $request->file('product_image4');
+            $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
+            $destination_path = base_path() . '/public/uploads/product_images/';
+            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+            $Product_Image->move($destination_path, $filename);
+            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+            $image_data=[
+                        'image' => $filename,
+                        'priority' => 4,
+                        'product_id' => $product_id
+                        ];
+            ProductImage::create($image_data);
+        }
+
+        return redirect('account/dashboard/my-products')->with('success_message','Product Updated');
+        
     }
 
     /**
@@ -185,5 +332,9 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+        $fields['active_status'] = 0;
+        $product = Product::find($id);
+        $product->update($fields);
+        return redirect('account/dashboard/my-products')->with('success_message','Product Deleted');
     }
 }

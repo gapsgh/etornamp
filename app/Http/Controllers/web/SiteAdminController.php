@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Company;
 use App\Email;
 use App\PhoneNumber;
+use App\Product;
+use App\ProductImage;
 
 class SiteAdminController extends Controller
 {
@@ -51,8 +53,41 @@ class SiteAdminController extends Controller
             // return view('site.admin.404');
         }
         $company_logo_path = '/uploads/logos/';
+
+
+        $company_id = $company_details['id'];
+
+        $products = Product::where('company_id','=',$company_id)
+                                    ->where('active_status','1')
+                                    ->with('image')
+                                    ->with('category')
+                                    ->with('rating')
+                                    ->with('visitors')
+                                    ->get()->toArray();
+        
+        $unapproved_products = Product::where('company_id','=',$company_id)
+                                    ->where('active_status','1')
+                                    ->where('approval_status','0')
+                                    ->with('image')
+                                    ->with('category')
+                                    ->with('rating')
+                                    ->with('visitors')
+                                    ->get()->toArray();
+        
+        $approved_products = Product::where('company_id','=',$company_id)
+                                    ->where('active_status','1')
+                                    ->where('approval_status','1')
+                                    ->with('image')
+                                    ->with('category')
+                                    ->with('rating')
+                                    ->with('visitors')
+                                    ->get()->toArray();
+
          return view('site.admin.dash', compact('company_details',
-                                            'company_logo_path'));
+                                            'company_logo_path',
+                                            'products',
+                                            'unapproved_products',
+                                            'approved_products'));
     }
 
     /**
@@ -64,6 +99,148 @@ class SiteAdminController extends Controller
     {
         //
     }
+
+    public function myproduct()
+    {
+        $user_id = '';
+        if(\Auth::check()) {
+            $user_id = \Auth::user()->id;
+        }
+
+        $company_details_data = Company::where('user_id','=',$user_id)->get()->toArray();
+        if(!empty($company_details_data)){
+            $company_details = $company_details_data[0];
+
+            $company_id = $company_details['id'];
+
+            $products = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->with('image')
+                                        ->with('category')
+                                        ->with('rating')
+                                        ->with('visitors')
+                                        ->get()->toArray();
+            
+            $unapproved_products = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->where('approval_status','0')
+                                        ->with('image')
+                                        ->with('category')
+                                        ->with('rating')
+                                        ->with('visitors')
+                                        ->get()->toArray();
+            
+            $approved_products = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->where('approval_status','1')
+                                        ->with('image')
+                                        ->with('category')
+                                        ->with('rating')
+                                       ->with('visitors')
+                                        ->get()->toArray();
+            
+
+            // dd($products);
+
+            return view('site.admin.products.product_list', compact('products','unapproved_products','approved_products'));
+        }
+
+    }
+
+    public function unapproved()
+    {
+        $user_id = '';
+        if(\Auth::check()) {
+            $user_id = \Auth::user()->id;
+        }
+
+        $company_details_data = Company::where('user_id','=',$user_id)->get()->toArray();
+        if(!empty($company_details_data)){
+            $company_details = $company_details_data[0];
+
+            $company_id = $company_details['id'];
+
+            $products = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->with('image')
+                                        ->with('category')
+                                        ->with('rating')
+                                        ->with('visitors')
+                                        ->get()->toArray();
+            
+            $unapproved_products = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->where('approval_status','0')
+                                        ->with('image')
+                                        ->with('category')
+                                        ->with('rating')
+                                        ->with('visitors')
+                                        ->get()->toArray();
+            
+            $approved_products = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->where('approval_status','1')
+                                        ->with('image')
+                                        ->with('category')
+                                        ->with('rating')
+                                        ->with('visitors')
+                                        ->get()->toArray();
+            
+
+            // dd($products);
+
+            return view('site.admin.products.product_list_unapproved', compact('products','unapproved_products','approved_products'));
+        }
+
+    }
+
+    public function approved()
+    {
+        $user_id = '';
+        if(\Auth::check()) {
+            $user_id = \Auth::user()->id;
+        }
+
+        $company_details_data = Company::where('user_id','=',$user_id)->get()->toArray();
+        if(!empty($company_details_data)){
+            $company_details = $company_details_data[0];
+
+            $company_id = $company_details['id'];
+
+            $products = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->with('image')
+                                        ->with('category')
+                                        ->with('rating')
+                                        ->with('visitors')
+                                        ->get()->toArray();
+            
+            $unapproved_products = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->where('approval_status','0')
+                                        ->with('image')
+                                        ->with('category')
+                                        ->with('rating')
+                                        ->with('visitors')
+                                        ->get()->toArray();
+            
+            $approved_products = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->where('approval_status','1')
+                                        ->with('image')
+                                        ->with('category')
+                                        ->with('rating')
+                                        ->with('visitors')
+                                        ->get()->toArray();
+            
+
+            // dd($products);
+
+            return view('site.admin.products.product_list_approved', compact('products','unapproved_products','approved_products'));
+        }
+
+    }
+
 
     /**
      * Store a newly created resource in storage.

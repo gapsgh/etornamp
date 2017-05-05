@@ -35,19 +35,24 @@
 									<span>{{ Auth::user()->name }}</span> <i class="icon-user fa"></i> <i class=" icon-down-open-big fa"></i>
 								</a>
 									<ul class="dropdown-menu user-menu">
-										<li class="active"><a href="{{ route('dashboard_path') }}"><i class="icon-home"></i> Personal Home
+										<li class="{{Request::path() == 'account/dashboard' ? 'active' : ''}}"><a href="{{ route('dashboard_path') }}"><i class="icon-home"></i> Personal Home
 										</a></li>
-										<li><a href="account-myads.html"><i class="icon-th-thumb"></i> My ads </a></li>
-										<li><a href="account-favourite-ads.html"><i class="icon-heart"></i> Favourite ads </a>
+										<li class="{{Request::path() == 'account/dashboard/my-products' ? 'active' : ''}}">
+											<a href="{{ route('dashboard_myproducts_path') }}"><i class="icon-th-thumb"></i>
+												 My ads 
+											</a>
 										</li>
-										<li><a href="account-saved-search.html"><i class="icon-star-circled"></i> Saved search
-										</a></li>
-										<li><a href="account-archived-ads.html"><i class="icon-folder-close"></i> Archived ads
-										</a></li>
-										<li><a href="account-pending-approval-ads.html"><i class="icon-hourglass"></i> Pending
-											approval </a>
+										<li class="{{Request::path() == 'account/dashboard/pending-approval' ? 'active' : ''}}">
+											<a href="{{ route('dashboard_unapproved_path') }}">
+												<i class="icon-hourglass"></i> Pending approval 	
+											</a>
 										</li>
-										<li><a href="statements.html"><i class=" icon-money "></i> Payment history </a></li>
+										<li class="{{Request::path() == 'account/dashboard/approved-ads' ? 'active' : ''}}">
+											<a href="{{ route('dashboard_approved_path') }}">
+												<i class="icon-check"></i> Approved Ads 
+											</a>
+										</li>
+										
 									</ul>
 							</li>
 						@endif

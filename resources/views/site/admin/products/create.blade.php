@@ -5,7 +5,6 @@
 @stop
 
 @section('content')
-
 <div class="main-container">
 	<div class="container">
 		<div class="row">
@@ -202,6 +201,9 @@
 
 												<button type="submit" class="btn btn-success btn-lg">Submit Product</button>
 												
+												<label class=" pull-right" for="RET">Save and return to this page?</label>
+												<input type="checkbox" id="RET" class="pull-right" name="return_to_page" value="1">
+												
 											</div>
 										</div>
 									</fieldset>
@@ -254,11 +256,22 @@
 @stop
 
 @section('scripts')
+	<?php 
+		if(session('success_message')){
+			?>
+			<script type="text/javascript">
+				setTimeout(function() {
+	            	Materialize.toast('<span>{{ session('success_message') }}</span>', 5000, 'btn-success');
+	        	}, 1000);
+			</script>
+			<?php
+		}
+	?>
 	<script type="text/javascript">
 		initialize_image_input('product_image1');
 		initialize_image_input('product_image2');
 		initialize_image_input('product_image3');
 		initialize_image_input('product_image4');
 	</script>
-	
+
 @stop

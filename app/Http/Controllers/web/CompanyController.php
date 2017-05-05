@@ -150,7 +150,7 @@ class CompanyController extends Controller
             return redirect('account/dashboard')->with('success_message', 'Company Logo Updated'); 
         }
 
-        //Ceate the company 
+        //Update the company 
         $company = Company::find($id);
         $company->update($fields);
 

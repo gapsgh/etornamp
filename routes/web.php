@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::resource('categories', web\CategoryController::class);
 Route::resource('companies', web\CompanyController::class);
 Route::resource('products', web\ProductController::class);
+Route::get('/products/create/success', ['as'=>'product_saved_path','uses'=> 'web\ProductController@savesuccess']);
 Route::resource('phonenumbers', web\PhoneNumberController::class);
 Route::resource('emails', web\EmailController::class);
 Route::resource('productimages', web\ProductImageController::class);
@@ -28,4 +29,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+
 Route::get('/account/dashboard',['as'=>'dashboard_path','uses'=> 'web\SiteAdminController@index']);
+Route::get('/account/dashboard/my-products',['as'=>'dashboard_myproducts_path','uses'=> 'web\SiteAdminController@myproduct']);
+Route::get('/account/dashboard/pending-approval',['as'=>'dashboard_unapproved_path','uses'=> 'web\SiteAdminController@unapproved']);
+Route::get('/account/dashboard/approved-ads',['as'=>'dashboard_approved_path','uses'=> 'web\SiteAdminController@approved']);

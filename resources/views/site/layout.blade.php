@@ -133,6 +133,7 @@
 	<script src="{{asset('/assets/plugins/jquery.fs.selecter/jquery.fs.selecter.js')}}"></script>
 
 	<script src="{{asset('/assets/js/script.js')}}"></script>
+	<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 	<script>
 
 
@@ -160,7 +161,7 @@
 	</script>
 	<script type="text/javascript">
     // Toast Notification
-    $(window).load(function() {
+ /*   $(window).load(function() {
         setTimeout(function() {
             Materialize.toast('<span>Hiya! I am a toast.</span>', 1500);
         }, 3000);
@@ -170,7 +171,7 @@
         setTimeout(function() {
             Materialize.toast('<span>You have new order.</span><a class="btn-flat yellow-text" href="#">Read<a>', 3000);
         }, 18000);
-    });
+    });*/
     
     </script>
 	@yield('scripts')

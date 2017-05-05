@@ -21,7 +21,8 @@ class CreateProductsTable extends Migration
             $table->integer('bulk_price');
             $table->integer('bonus_percentage_single');
             $table->integer('bonus_percentage_bulk');
-            $table->integer('active_status')->default('0');
+            $table->integer('active_status')->default('1');
+            $table->integer('approval_status')->default('0');
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->integer('company_id')->unsigned();

@@ -34,8 +34,14 @@ class Product extends Model
     }
 
     public function rating(){
-    	return $this->hasMany('App\ProductRating');
+        return $this->hasMany('App\ProductRating');
     }
+
+    public function visitors(){
+    	return $this->hasMany('App\ProductVisitors');
+    }
+
+
 
 
 }
