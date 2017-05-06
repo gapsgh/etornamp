@@ -50,7 +50,8 @@ class SiteAdminController extends Controller
             }
 
         }else{
-            // return view('site.admin.404');
+            //send the ueser to the create Company page
+             return redirect('companies/create')->with('info_message','You have to create a business profile to start listing!!');
         }
         $company_logo_path = '/uploads/logos/';
 
@@ -143,6 +144,9 @@ class SiteAdminController extends Controller
             // dd($products);
 
             return view('site.admin.products.product_list', compact('products','unapproved_products','approved_products'));
+        }else{
+            //send the ueser to the create Company page
+             return redirect('companies/create')->with('info_message','You have to create a business profile to start listing!!');
         }
 
     }
@@ -190,6 +194,9 @@ class SiteAdminController extends Controller
             // dd($products);
 
             return view('site.admin.products.product_list_unapproved', compact('products','unapproved_products','approved_products'));
+        }else{
+            //send the ueser to the create Company page
+             return redirect('companies/create')->with('info_message','You have to create a business profile to start listing!!');
         }
 
     }
@@ -237,6 +244,9 @@ class SiteAdminController extends Controller
             // dd($products);
 
             return view('site.admin.products.product_list_approved', compact('products','unapproved_products','approved_products'));
+        }else{
+            //send the ueser to the create Company page
+             return redirect('companies/create');
         }
 
     }

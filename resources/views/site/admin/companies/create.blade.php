@@ -63,9 +63,7 @@
 									<div class="form-group">
 										<label class="col-md-4 control-label" for="textarea">About Business</label>
 										<div class="col-md-6">
-											<textarea class="form-control" id="textarea" name="other_description">
-												A little About Your Business
-											</textarea>
+											<textarea class="form-control" id="textarea" name="other_description" placeholder="A little About Your Business"></textarea>
 										</div>
 									</div>
 									<div class="form-group required">
@@ -92,7 +90,7 @@
 										<div class="col-md-8">
 											<div class="termbox mb10">
 												<label class="checkbox-inline" for="checkboxes-1">
-													<input name="checkboxes" id="checkboxes-1" value="1" type="checkbox">
+													<input name="checkboxes" id="checkboxes-1" value="1" type="checkbox" required="">
 														I have read and agree to the 
 														<a href="#">Terms
 													& Conditions</a> 
@@ -136,6 +134,18 @@
 @stop
 
 @section('scripts')
+<?php 
+		if(session('info_message')){
+			?>
+			<script type="text/javascript">
+				setTimeout(function() {
+	            	Materialize.toast('<span><b>{{ session('info_message') }}</b></span>', 6000, 'btn-primary');
+	        	}, 600);
+			</script>
+			<?php
+		}
+	?>
+
 	<script type="text/javascript">
 		initialize_image_input('Comp_logo');
 	</script>
