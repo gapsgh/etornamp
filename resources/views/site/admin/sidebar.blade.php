@@ -28,6 +28,8 @@
 									<?php
 									if (isset($products)) {
 										echo count($products);
+									}else{
+										echo '0';
 									}
 									?>
 								</span> 
@@ -60,6 +62,8 @@
 								 	<?php
 									if (isset($approved_products)) {
 										echo count($approved_products);
+									}else{
+										echo "0";
 									}
 									?>
 								 </span>

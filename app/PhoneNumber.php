@@ -9,6 +9,7 @@ class PhoneNumber extends Model
 	protected $fillable = [
         'number',
         'priority',
+        'on_whatsapp',
         'company_id'
     ];
     //

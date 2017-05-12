@@ -11,11 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('site.pages.home');
+
+Route::get('/', 'web\HomeController@index');
+
+Route::get('/map', function () {
+    return view('site.pages.mapadd');
 });
 
 Route::resource('categories', web\CategoryController::class);
+ Route::get('/all-categories', 'web\CategoryController@allsubs');
+ Route::get('categories/{id}/{slug}', 'web\CategoryController@show');
+
 Route::resource('companies', web\CompanyController::class);
 Route::resource('products', web\ProductController::class);
 Route::get('/products/create/success', ['as'=>'product_saved_path','uses'=> 'web\ProductController@savesuccess']);

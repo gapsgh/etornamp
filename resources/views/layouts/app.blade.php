@@ -22,9 +22,9 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-static-top" style="min-height: 82px; background: #fff;">
             <div class="container">
-                <div class="navbar-header">
+                <div class="navbar-header" style=" margin-top: 6px;">
 
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
@@ -79,9 +79,16 @@
                 </div>
             </div>
         </nav>
+        <br/>
+        <br/>
+        <br/>
 
         @yield('content')
     </div>
+    <br/>
+    <br/>
+    <br/>
+    @include('site.site_footer')
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

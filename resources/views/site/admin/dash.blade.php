@@ -27,7 +27,13 @@
 									<i class="fa fa-eye ln-shadow"></i></div>
 									<div class="mcol-right">
 
-										<p><a href="#">7000</a> <em>visits</em></p>
+										<p><a href="#"><?php
+														if (isset($visitors)) {
+															echo $visitors;
+														}else{
+															echo '0';
+														}
+														?></a> <em>visits</em></p>
 									</div>
 									<div class="clearfix"></div>
 								</div>
@@ -38,7 +44,14 @@
 										<i class="icon-th-thumb ln-shadow"></i></div>
 										<div class="mcol-right">
 
-											<p><a href="#">12</a><em>Ads</em></p>
+											<p><a href="{{ route('dashboard_myproducts_path') }}">
+														<?php
+														if (isset($products)) {
+															echo count($products);
+														}else{
+															echo '0';
+														}
+														?></a><em>Ads</em></p>
 										</div>
 										<div class="clearfix"></div>
 									</div>
@@ -46,10 +59,16 @@
 									<div class="hdata">
 										<div class="mcol-left">
 
-											<i class="fa fa-user ln-shadow"></i></div>
+											<i class="fa fa-check-square-o ln-shadow"></i></div>
 											<div class="mcol-right">
 
-												<p><a href="#">18</a> <em>Favorites </em></p>
+												<p><a href="{{ route('dashboard_approved_path') }}"><?php
+																if (isset($approved_products)) {
+																	echo count($approved_products);
+																}else{
+																	echo "0";
+																}
+																?></a> <em>Approved </em></p>
 											</div>
 											<div class="clearfix"></div>
 										</div>
@@ -65,7 +84,7 @@
 							<div id="accordion" class="panel-group">
 								<div class="panel panel-default">
 									<div class="panel-heading">
-										<h4 class="panel-title"><a href="#collapseB1" data-toggle="collapse"> My
+										<h4 class="panel-title"><a style="display: block;" href="#collapseB1" data-toggle="collapse"> My
 											details </a></h4>
 										</div>
 										<div class="panel-collapse collapse in" id="collapseB1">
@@ -104,17 +123,24 @@
 
 														<div class="form-group required">
 															<label class="col-md-4 control-label">Phone Number <sup>*</sup></label>
-															<div class="col-md-6">
+															<div class="col-md-5">
 																<input name="number" value="{{$company_details['phone_number']}}" placeholder="Phone Number" class="form-control input-md" type="text">
+															</div>
+
+															<div class="col-md-1">
+																<label class="checkbox-inline" for="on_whatsapp">
+																	<input name="on_whatsapp" id="on_whatsapp" value="1" type="checkbox" <?php if($company_details['on_whatsapp'] =='1'){
+																		echo "checked";
+																		} ?> >
+																		<i class="fa fa-whatsapp fa-2x" style="color: green;"></i>
+																</label>
 															</div>
 														</div>
 
 														<div class="form-group">
 															<label class="col-md-4 control-label" for="textarea">About Business</label>
 															<div class="col-md-6">
-																<textarea class="form-control" id="textarea" name="other_description">
-																	{{$company_details['other_description']}}
-																</textarea>
+																<textarea class="form-control" id="textarea" name="other_description">{{$company_details['other_description']}}</textarea>
 															</div>
 														</div>
 														<div class="form-group required">
@@ -144,7 +170,7 @@
 									</div>
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h4 class="panel-title"><a href="#collapseB2" data-toggle="collapse"> Settings </a>
+											<h4 class="panel-title"><a style="display: block;" href="#collapseB2" data-toggle="collapse">Logo Settings </a>
 											</h4>
 										</div>
 										<div class="panel-collapse collapse" id="collapseB2">
@@ -173,6 +199,58 @@
 												</div>
 											</div>
 										</div>
+
+										<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title"><a style="display: block;" href="#collapseB3" data-toggle="collapse">Map Settings </a>
+											</h4>
+										</div>
+										<div class="panel-collapse" id="collapseB3">
+											<div class="panel-body">
+
+												<form  action="/companies/{{$company_details['id']}}" method="POST" class="form-horizontal" enctype="multipart/form-data" role="form">
+													<input name="_method" type="hidden" value="PUT">
+													{{ csrf_field() }}
+													<div class="form-group">
+														<label for="searchmap" class="col-md-4 control-label">Search Your Location
+														</label>
+														<div class="col-md-6">
+															<input id="searchmap" class="form-control" type="text">
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<sup style="color: #318434; text-align: center;">Move Position Marker To The Location Of Your Business/Shop</sup>
+														<div class="col-md-12" id="map-canvas" style="height: 250px;"></div>
+													</div>
+
+													<div class="form-group">
+														<label for="searchmap" class="col-md-3 control-label">Your Map Coordinates</label>
+														<div class="col-md-4">
+															<label for="lat" class="col-md-2 control-label">Lat</label>
+															<div class="col-md-10">
+																<input id="lat" class="form-control input-md" name="lat" type="text" readonly="">
+															</div>
+														</div>
+														<div class="col-md-4">
+															<label for="lat" class="col-md-2 control-label">Lng</label>
+															<div class="col-md-10">
+																<input id="lng" class="form-control input-md" name="lng" type="text" readonly="">
+															</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<div class="col-sm-offset-5 col-sm-12">
+															<button type="submit" class="btn btn-primary">Update Location</button>
+														</div>
+													</div>
+
+												</form>
+
+
+												</div>
+											</div>
+										</div>
 										
 									</div>
 
@@ -187,8 +265,51 @@
 @stop
 
 @section('scripts')
-
+<?php 
+		if(session('success_message')){
+			?>
+			<script type="text/javascript">
+				setTimeout(function() {
+	            	Materialize.toast('<span><b>{{ session('success_message') }}</b></span>', 6000, 'btn-success');
+	        	}, 600);
+			</script>
+			<?php
+		}
+	?>
 	<script type="text/javascript">
 		initialize_image_input('Comp_logo');
+
+		@if(trim($company_details['location']['lng'])  !='' )
+			var pos = {
+			      	lat:{{$company_details['location']['lat']}},
+			      	lng:{{$company_details['location']['lng']}}
+			      };
+			     create_map(pos);
+		@else
+			var pos = {
+		      	lat:5.6037168,
+		      	lng:-0.1869644
+		      };
+		    // Try HTML5 geolocation.
+		    if (navigator.geolocation) {
+		      navigator.geolocation.getCurrentPosition(function(position) {
+		      	//set the mapto the current location
+		         var currentpos = {
+		          lat: position.coords.latitude,
+		          lng: position.coords.longitude
+		        };
+		        create_map(currentpos);
+
+		      }, function() {
+		        //set the map to the default location if location fails
+		       create_map(pos);
+		      });
+		    } else {
+		      // Browser doesn't support Geolocation
+		      // set the map to the default location 
+		      create_map(pos);
+		    }
+		@endif
+		
 	</script>
 @stop

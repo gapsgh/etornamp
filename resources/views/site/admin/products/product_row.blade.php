@@ -1,5 +1,14 @@
 <tr>
+
 		<td style="width:16%" class="add-img-td">
+			<?php
+				if(trim($product['premiun_status']) != '0'){
+					?>
+					<img src="http://cduh.com.ph/images/featured.png" style=" position: absolute; width: 69px;">
+					<?php
+				}
+			?>
+			
 			<a href="#">
 				<img class="thumbnail  img-responsive" 
 				src="<?php

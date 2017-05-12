@@ -9,6 +9,7 @@ use App\Email;
 use App\PhoneNumber;
 use App\Product;
 use App\ProductImage;
+use App\ProductVisitors;
 
 class SiteAdminController extends Controller
 {
@@ -31,16 +32,19 @@ class SiteAdminController extends Controller
         $company_details_data = Company::where('user_id','=',$user_id)
                                 ->with('phone_number')
                                 ->with('email')
+                                ->with('location')
                                 ->get()->toArray();
         
-
+                                
         if(!empty($company_details_data)){
             $company_details = $company_details_data[0];
             //cleanup the email phone number and make it a simple array item hust like the others
             if(count($company_details['phone_number']) >0){
+                $company_details['on_whatsapp'] = $company_details['phone_number'][0]['on_whatsapp'];
                 $company_details['phone_number'] = $company_details['phone_number'][0]['number'];
             }else{
                 $company_details['phone_number'] = '';
+                $company_details['on_whatsapp'] = '0';
             }
 
             if(count($company_details['email']) >0){
@@ -49,6 +53,13 @@ class SiteAdminController extends Controller
                 $company_details['email'] = '';
             }
 
+            if(count($company_details['location']) >0){
+                $company_details['location'] = $company_details['location'][0];
+            }else{
+                $company_details['location'] = ['lat'=>5.6037168,'lng'=>-0.1869644];
+            }
+
+            // dd($company_details_data);
         }else{
             //send the ueser to the create Company page
              return redirect('companies/create')->with('info_message','You have to create a business profile to start listing!!');
@@ -65,7 +76,19 @@ class SiteAdminController extends Controller
                                     ->with('rating')
                                     ->with('visitors')
                                     ->get()->toArray();
-        
+
+        $product_ids = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->pluck('id')->toArray();
+        if(count($product_ids) < 1){
+            $visitors = 0; //since products are 0 visitors are 0
+        }else{
+            //find the visitors for the cuurent customer/company
+            $visitors = count(ProductVisitors::whereIn('product_id',$product_ids)
+                                        ->get()->toArray());
+
+        }
+
         $unapproved_products = Product::where('company_id','=',$company_id)
                                     ->where('active_status','1')
                                     ->where('approval_status','0')
@@ -87,6 +110,7 @@ class SiteAdminController extends Controller
          return view('site.admin.dash', compact('company_details',
                                             'company_logo_path',
                                             'products',
+                                            'visitors',
                                             'unapproved_products',
                                             'approved_products'));
     }
@@ -121,6 +145,17 @@ class SiteAdminController extends Controller
                                         ->with('rating')
                                         ->with('visitors')
                                         ->get()->toArray();
+
+            $product_ids = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->pluck('id')->toArray();
+            if(count($product_ids) <1){
+                $visitors = 0; //since products are 0 visitors are 0
+            }else{
+                //find the visitors for the cuurent customer/company
+                $visitors = count(ProductVisitors::whereIn('product_id',$product_ids)
+                                        ->get()->toArray());
+            }
             
             $unapproved_products = Product::where('company_id','=',$company_id)
                                         ->where('active_status','1')
@@ -143,7 +178,7 @@ class SiteAdminController extends Controller
 
             // dd($products);
 
-            return view('site.admin.products.product_list', compact('products','unapproved_products','approved_products'));
+            return view('site.admin.products.product_list', compact('products','visitors','unapproved_products','approved_products'));
         }else{
             //send the ueser to the create Company page
              return redirect('companies/create')->with('info_message','You have to create a business profile to start listing!!');
@@ -172,6 +207,17 @@ class SiteAdminController extends Controller
                                         ->with('visitors')
                                         ->get()->toArray();
             
+            $product_ids = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->pluck('id')->toArray();
+            if(count($product_ids) <1){
+                $visitors = 0; //since products are 0 visitors are 0
+            }else{
+                //find the visitors for the cuurent customer/company
+                $visitors = count(ProductVisitors::whereIn('product_id',$product_ids)
+                                        ->get()->toArray());
+            }
+            
             $unapproved_products = Product::where('company_id','=',$company_id)
                                         ->where('active_status','1')
                                         ->where('approval_status','0')
@@ -193,7 +239,7 @@ class SiteAdminController extends Controller
 
             // dd($products);
 
-            return view('site.admin.products.product_list_unapproved', compact('products','unapproved_products','approved_products'));
+            return view('site.admin.products.product_list_unapproved', compact('products','visitors','unapproved_products','approved_products'));
         }else{
             //send the ueser to the create Company page
              return redirect('companies/create')->with('info_message','You have to create a business profile to start listing!!');
@@ -221,7 +267,18 @@ class SiteAdminController extends Controller
                                         ->with('rating')
                                         ->with('visitors')
                                         ->get()->toArray();
-            
+
+            $product_ids = Product::where('company_id','=',$company_id)
+                                        ->where('active_status','1')
+                                        ->pluck('id')->toArray();
+            if(count($product_ids) <1){
+                $visitors = 0; //since products are 0 visitors are 0
+            }else{
+                //find the visitors for the cuurent customer/company
+                $visitors = count(ProductVisitors::whereIn('product_id',$product_ids)
+                                        ->get()->toArray());
+            }
+
             $unapproved_products = Product::where('company_id','=',$company_id)
                                         ->where('active_status','1')
                                         ->where('approval_status','0')
@@ -243,7 +300,7 @@ class SiteAdminController extends Controller
 
             // dd($products);
 
-            return view('site.admin.products.product_list_approved', compact('products','unapproved_products','approved_products'));
+            return view('site.admin.products.product_list_approved', compact('products','visitors','unapproved_products','approved_products'));
         }else{
             //send the ueser to the create Company page
              return redirect('companies/create');

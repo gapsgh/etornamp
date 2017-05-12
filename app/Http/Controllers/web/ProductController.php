@@ -36,9 +36,18 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categoris = Category::get()->toArray();
-        // dd($categoris);
-        return view('site.admin.products.create',compact('categoris'));
+        $category_level_1 = Category::where('level',1)->get()->toArray();
+        
+        $categories = [];
+        foreach ($category_level_1  as $key => $category_1) {
+            $parent_id = $category_1['id'];
+            $category_level_2s = Category::where('parent_id',$parent_id)->where('level',2)->get()->toArray();
+            $category_1['level2'] = $category_level_2s;
+            $categories[] = $category_1;
+        }
+        // dd($categories);
+
+        return view('site.admin.products.create',compact('categories'));
     }
 
     /**
@@ -77,15 +86,20 @@ class ProductController extends Controller
             $fields['bulk_price'] = 0;
         }
         if(empty($fields['active_status'])){
-            $fields['active_status'] = 0;
+            $fields['active_status'] = 1;
         }
         if(empty($fields['certification_status'])){
             $fields['certification_status'] = 0;
         }
         if(empty($fields['premiun_status'])){
             $fields['premiun_status'] = 0;
+            $fields['approval_status'] = 1;   //If the product is not featured, it does not need approval
+        }elseif (!empty($fields['premiun_status']) and $fields['premiun_status'] != '0') {
+            $fields['approval_status'] = 0;
+        }else{
+             $fields['approval_status'] = 1;   //If the product is not featured, it does not need approval
         }
-        
+        // dd($fields);
 
         //Add the product 
         $product = Product::create($fields);
@@ -200,8 +214,18 @@ class ProductController extends Controller
 
         $product_images = ProductImage::where('product_id',$product_id)->get()->toArray();
        // dd($product_images);
+       // 
+       $category_level_1 = Category::where('level',1)->get()->toArray();
         
-        return view('site.admin.products.edit',compact('product','product_images','categoris'));
+        $categories = [];
+        foreach ($category_level_1  as $key => $category_1) {
+            $parent_id = $category_1['id'];
+            $category_level_2s = Category::where('parent_id',$parent_id)->where('level',2)->get()->toArray();
+            $category_1['level2'] = $category_level_2s;
+            $categories[] = $category_1;
+        }
+        
+        return view('site.admin.products.edit',compact('product','product_images','categories'));
     }
 
     /**

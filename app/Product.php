@@ -15,6 +15,7 @@ class Product extends Model
         'bonus_percentage_single',
         'bonus_percentage_bulk',
         'active_status',
+        'approval_status',
         'category_id',
         'company_id',
         'certification_status',

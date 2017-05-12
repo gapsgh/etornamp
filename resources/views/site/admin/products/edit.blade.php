@@ -23,16 +23,15 @@
 										<label class="col-md-3 control-label">Category</label>
 										<div class="col-md-8">
 											<select name="category_id" id="category-group" required="" class="form-control">
-												<option value="0" selected="selected" disabled=""> Select a category...</option>
-												<option value="" style="background-color:#E9E9E9;font-weight:bold; font-size: 20px !important;" disabled="disabled"> - Vehicles -
-												</option>
-												<option value="2"> Cars</option>
-												<option value="3"> Commercial vehicles</option>
-												<option value="4"> Motorcycles</option>
-												<option value="5"> Car &amp; Motorcycle Equipment
-												</option>
-												<option value="1"> Boats</option>
-												<option value="7"> Other Vehicles</option>
+												<option value="0" disabled=""> Select a category...</option>
+												@foreach($categories as $cat_lev_1)
+													<option value="" style="background-color:#E9E9E9;font-weight:bold; font-size: 20px !important;" disabled="disabled"> - {{$cat_lev_1['name']}} -
+													</option>
+													@foreach($cat_lev_1['level2'] as $cat_lev_2)
+														<option value="{{$cat_lev_2['id']}}" 
+														<?php if($product['name'] == $cat_lev_2['id']){ echo 'selected'; } ?> > {{$cat_lev_2['name']}}</option>
+													@endforeach
+												@endforeach
 
 											</select>
 										</div>

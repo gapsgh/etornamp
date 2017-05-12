@@ -46,9 +46,26 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$slug)
     {
         //
+        //Get the current category details
+        $category = Category::where('id',$id)->get()->toArray()[0];
+
+        //Get the sub categories of the current category
+        $sub_categories = Category::where('parent_id',$id)->where('level',2)->get()->toArray();
+
+
+        return view('site.pages.sub_categories',compact('sub_categories','category'));
+    }
+
+    public function allsubs()
+    {
+        //Get the sub categories of the current category
+        $sub_categories = Category::where('level',2)->get()->toArray();
+
+
+        return view('site.pages.sub_categories',compact('sub_categories'));
     }
 
     /**

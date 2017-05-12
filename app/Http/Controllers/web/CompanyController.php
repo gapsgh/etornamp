@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Company;
 use App\Email;
 use App\PhoneNumber;
+use App\MapLocation;
 
 use App\Http\Requests\companyRequest;
 
@@ -88,6 +89,8 @@ class CompanyController extends Controller
         //save the company email and phone numbers
         Email::create($fields);
         PhoneNumber::create($fields);
+        MapLocation::create($fields);
+
 
         return redirect('account/dashboard')->with('message', 'Account Created'); 
     }
@@ -129,6 +132,8 @@ class CompanyController extends Controller
 
         //Get all the request field data
         $fields = $request->all();
+        // Add the currently created company id to the field list
+        $fields['company_id'] = $id;
 
         //Add the current user id to the request field list 
         if(\Auth::check()) {
@@ -149,13 +154,23 @@ class CompanyController extends Controller
 
             return redirect('account/dashboard')->with('success_message', 'Company Logo Updated'); 
         }
+        // dd($fields);
+        if(!empty($fields['lat'])){ //this will tell us that the map settings is what the user wants to update
+            //save the company email and phone numbers
+            $MapLocation = MapLocation::where('company_id',$id);
+            $MapLocation->delete();
+            MapLocation::create($fields);
+
+            return redirect('account/dashboard')->with('success_message', 'Map Location Updated'); 
+        }
+
+        
 
         //Update the company 
         $company = Company::find($id);
         $company->update($fields);
 
-        // Add the currently created company id to the field list
-        $fields['company_id'] = $id;
+        
 
         //save the company email and phone numbers
         $email = Email::where('company_id',$id);
@@ -166,7 +181,7 @@ class CompanyController extends Controller
         $phone_number->delete();
         PhoneNumber::create($fields);
 
-        return redirect('account/dashboard')->with('success_message', 'Account Updated'); 
+        return redirect('account/dashboard')->with('success_message', 'Business/Company Details Updated'); 
     }
 
     /**

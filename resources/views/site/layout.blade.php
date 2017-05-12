@@ -10,14 +10,17 @@
 <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+    <![endif]-->  
 
     <script>
     	paceOptions = {
     		elements: true
     	};
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="{{asset('/assets/js/pace.min.js')}}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqAYaryKJixJsWu8L4gTcRdqTylIA-hzg&libraries=places"
+  type="text/javascript"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -28,99 +31,11 @@
 
 					</div>
 
-					<div class="page-info hasOverly" style="background: url({{asset('/images/bg.jpg')}}); background-size:cover">
-						<div class="bg-overly">
-							<div class="container text-center section-promo">
-								<div class="row">
-									<div class="col-sm-3 col-xs-6 col-xxs-12">
-										<div class="iconbox-wrap">
-											<div class="iconbox">
-												<div class="iconbox-wrap-icon">
-													<i class="icon  icon-group"></i>
-												</div>
-												<div class="iconbox-wrap-content">
-													<h5><span>2200</span></h5>
-													<div class="iconbox-wrap-text">Trusted Seller</div>
-												</div>
-											</div>
-
-										</div>
-
-									</div>
-									<div class="col-sm-3 col-xs-6 col-xxs-12">
-										<div class="iconbox-wrap">
-											<div class="iconbox">
-												<div class="iconbox-wrap-icon">
-													<i class="icon  icon-th-large-1"></i>
-												</div>
-												<div class="iconbox-wrap-content">
-													<h5><span>100</span></h5>
-													<div class="iconbox-wrap-text">Categories</div>
-												</div>
-											</div>
-
-										</div>
-
-									</div>
-									<div class="col-sm-3 col-xs-6  col-xxs-12">
-										<div class="iconbox-wrap">
-											<div class="iconbox">
-												<div class="iconbox-wrap-icon">
-													<i class="icon  icon-map"></i>
-												</div>
-												<div class="iconbox-wrap-content">
-													<h5><span>700</span></h5>
-													<div class="iconbox-wrap-text">Location</div>
-												</div>
-											</div>
-
-										</div>
-
-									</div>
-									<div class="col-sm-3 col-xs-6 col-xxs-12">
-										<div class="iconbox-wrap">
-											<div class="iconbox">
-												<div class="iconbox-wrap-icon">
-													<i class="icon icon-facebook"></i>
-												</div>
-												<div class="iconbox-wrap-content">
-													<h5><span>50,000</span></h5>
-													<div class="iconbox-wrap-text"> Facebook Fans</div>
-												</div>
-											</div>
-
-										</div>
-
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="page-bottom-info">
-						<div class="page-bottom-info-inner">
-							<div class="page-bottom-info-content text-center">
-							<h1>If you have any questions, comments or concerns, please call the PROMOTEGH.COM Advertising department </h1>
-									<a class="btn  btn-lg btn-primary-dark" href="tel:+000000000">
-										<i class="icon-mobile"></i> <span class="hide-xs color50">Call Now:</span> (+233) 54-3414-719 </a>
-									</div>
-								</div>
-							</div>
-							<div class="footer" id="footer">
-								<div class="container">
-									<ul class=" pull-left navbar-link footer-nav">
-										<li><a href="index.html"> Home </a> <a href="about-us.html"> About us </a> <a href="#"> Terms and
-											Conditions </a> <a href="#"> Privacy Policy </a> <a href="contact.html"> Contact us </a> <a href="faq.html"> FAQ </a>
-										</ul>
-										<ul class=" pull-right navbar-link footer-nav">
-											<li> &copy; 2017 PROMOTEGH.COM</li>
-										</ul>
-									</div>
-								</div>
+					@include('site.site_footer')
 
 
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	
 	<script src="{{asset('/assets/bootstrap/js/bootstrap.min.js')}}"></script>
 
 	<script src="{{asset('/assets/js/owl.carousel.min.js')}}"></script>
@@ -134,6 +49,7 @@
 
 	<script src="{{asset('/assets/js/script.js')}}"></script>
 	<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+	<script src="https://use.fontawesome.com/7a96213a08.js"></script>
 	<script>
 
 
@@ -158,6 +74,7 @@
             'previewFileType':'image'
         });
     }
+
 	</script>
 	<script type="text/javascript">
     // Toast Notification
@@ -173,6 +90,46 @@
         }, 18000);
     });*/
     
+
+    function create_map(pos) {
+   
+	var map = new google.maps.Map(document.getElementById('map-canvas'),{
+		center:pos,
+		zoom:15
+	});
+	
+	var marker = new google.maps.Marker({
+		position:pos,
+		map:map,
+		draggable:true
+	});
+	$('#lat').val(pos.lat);
+	$('#lng').val(pos.lng);
+
+	var searchBox = new google.maps.places.SearchBox(document.getElementById('searchmap'));
+
+	google.maps.event.addListener(searchBox,'places_changed',function(){
+		var places = searchBox.getPlaces();
+		var bounds = new google.maps.LatLngBounds();
+		var i, place;
+		for ( i=0; place=places[i]; i++) {
+			bounds.extend(place.geometry.location);
+			marker.setPosition(place.geometry.location); //set marker position to new location
+		}
+		map.fitBounds(bounds);
+		map.setZoom(15);
+	});
+
+	google.maps.event.addListener(marker,'position_changed',function(){
+		var lat = marker.getPosition().lat();
+		var lng = marker.getPosition().lng(); 
+		$('#lat').val(lat);
+		$('#lng').val(lng);
+
+	});
+
+	 }
+
     </script>
 	@yield('scripts')
 

@@ -55,9 +55,16 @@
 
 									<div class="form-group required">
 										<label class="col-md-4 control-label">Phone Number <sup>*</sup></label>
-										<div class="col-md-6">
+										<div class="col-md-5">
 											<input name="number" placeholder="Phone Number" class="form-control input-md" type="text">
 										</div>
+										<div class="col-md-1">
+											<label class="checkbox-inline" for="on_whatsapp">
+												<input name="on_whatsapp" id="on_whatsapp" value="1" type="checkbox">
+													<i class="fa fa-whatsapp fa-2x" style="color: green;"></i>
+											</label>
+										</div>
+
 									</div>
 
 									<div class="form-group">
@@ -84,6 +91,40 @@
 											<p class="help-block">Add Your Company/Business Logo</p>
 										</div>
 									</div>
+
+
+									<hr/>
+									<h4>Optional Map Feature</h4>
+									<div class="form-group">
+										<label for="searchmap" class="col-md-4 control-label">Search Your Location
+										</label>
+										<div class="col-md-6">
+											<input id="searchmap" class="form-control" type="text">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<sup style="color: #318434; text-align: center;">Move Position Marker To The Location Of Your Business/Shop</sup>
+										<div class="col-md-12" id="map-canvas" style="height: 250px;"></div>
+									</div>
+
+									<div class="form-group">
+										<label for="searchmap" class="col-md-3 control-label">Your Map Coordinates</label>
+										<div class="col-md-4">
+											<label for="lat" class="col-md-2 control-label">Lat</label>
+											<div class="col-md-10">
+												<input id="lat" class="form-control input-md" name="lat" type="text" readonly="">
+											</div>
+										</div>
+										<div class="col-md-4">
+											<label for="lat" class="col-md-2 control-label">Lng</label>
+											<div class="col-md-10">
+												<input id="lng" class="form-control input-md" name="lng" type="text" readonly="">
+											</div>
+										</div>
+
+									</div>
+									<hr/>
 										
 									<div class="form-group">
 										<label class="col-md-4 control-label"></label>
@@ -149,5 +190,34 @@
 	<script type="text/javascript">
 		initialize_image_input('Comp_logo');
 	</script>
+	<script type="text/javascript">
+	var pos = {
+      	lat:5.6037168,
+      	lng:-0.1869644
+      };
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+      	//set the mapto the current location
+         var currentpos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        create_map(currentpos);
+
+      }, function() {
+        //set the map to the default location if location fails
+       create_map(pos);
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      // set the map to the default location 
+      create_map(pos);
+    }
+
+    
+
+
+</script>
 	
 @stop
