@@ -8,6 +8,7 @@
 <link href="{{asset('/assets/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 
 <link href="{{asset('/assets/css/style.css')}}" rel="stylesheet">
+<link href="{{asset('/assets/css/my.css')}}" rel="stylesheet">
 
 <link href="{{asset('/assets/css/owl.carousel.css')}}" rel="stylesheet">
 <link href="{{asset('/assets/css/owl.theme.css')}}" rel="stylesheet">

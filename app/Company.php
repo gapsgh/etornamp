@@ -31,6 +31,10 @@ class Company extends Model
     	return $this->hasMany('App\MapLocation');
     }
 
+    public function location_city(){
+        return $this->belongsTo('App\Location');
+    }
+
     public function product(){
     	return $this->hasMany('App\Product');
     }

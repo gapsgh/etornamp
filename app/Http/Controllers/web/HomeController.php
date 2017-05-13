@@ -5,6 +5,7 @@ namespace App\Http\Controllers\web;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
+use App\Product;
 
 class HomeController extends Controller
 {
@@ -26,8 +27,32 @@ class HomeController extends Controller
             $categories[] = $category_1;
         }
         // dd($categories);
+        // 
+        $featured_products = Product::where('premiun_status','<>',0)
+                                    ->where('active_status','1')
+                                    ->with('image')
+                                    ->with('category')
+                                    ->with('rating')
+                                    ->with('visitors')
+                                    ->limit(10)
+                                    ->get()->toArray();
+        // dd($featured_products);
 
-        return view('site.pages.home',compact('categories'));
+        return view('site.pages.home',compact('categories','featured_products'));
+    }
+
+    public function allfeatured()
+    {
+        $featured_products = Product::where('premiun_status','<>',0)
+                                    ->where('active_status','1')
+                                    ->with('image')
+                                    ->with('category')
+                                    ->with('company')
+                                    ->with('rating')
+                                    ->with('visitors')
+                                    ->paginate(15);
+        // dd($featured_products);
+        return view('site.pages.featured_products',compact('featured_products'));
     }
 
     /**

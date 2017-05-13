@@ -29,6 +29,8 @@ class CreateProductsTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies');
             $table->integer('certification_status')->default('0');
             $table->integer('premiun_status')->default('0');
+            $table->integer('location_city');
+            $table->foreign('location_city')->references('id')->on('location');
             $table->timestamps();
         });
     }

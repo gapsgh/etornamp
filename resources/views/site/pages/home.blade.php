@@ -50,65 +50,48 @@
 				@endforeach
 			</div>
 		</div>
-												<div style="clear: both"></div>
-												<div class="col-lg-12 content-box ">
-													<div class="row row-featured">
-														<div class="col-lg-12  box-title ">
-															<div class="inner"><h2><span>Sponsored </span>
-																Products <a href="category.html" class="sell-your-item"> View more <i class="  icon-th-list"></i> </a></h2>
-															</div>
-														</div>
-														<div style="clear: both"></div>
-														<div class=" relative  content featured-list-row clearfix">
-															<nav class="slider-nav has-white-bg nav-narrow-svg">
-																<a class="prev">
-																	<span class="nav-icon-wrap"></span>
-																</a>
-																<a class="next">
-																	<span class="nav-icon-wrap"></span>
-																</a>
-															</nav>
-															<div class="no-margin featured-list-slider ">
-																<div class="item"><a href="ads-details-automobile.html">
-																	<span class="item-carousel-thumb">
-																		<img class="img-responsive" src="images/auto/2012-mercedes-benz-sls-amg.jpg" alt="img">
-																	</span>
-																	<span class="item-name"> 2011 Mercedes-Benz SLS AMG </span>
-																	<span class="price"> $204,990 </span>
-																</a>
-															</div>
-															<div class="item">
-																<a href="ads-details.html">
-																	<span class="item-carousel-thumb">
-																		<img class="img-responsive" src="images/item/tp/Image00011.jpg" alt="img">
-																	</span>
-																	<span class="item-name"> Lorem ipsum dolor sit amet </span>
-																	<span class="price"> $ 260 </span>
-																</a>
-															</div>
-															<div class="item"><a href="ads-details.html">
-																<span class="item-carousel-thumb"> <img class="item-img" src="images/item/tp/Image00006.jpg" alt="img"> </span>
-																<span class="item-name"> consectetuer adipiscing elit </span>
-																<span class="price"> $ 240 </span></a></div>
-																<div class="item"><a href="ads-details.html">
-																	<span class="item-carousel-thumb"> <img class="item-img" src="images/item/tp/Image00022.jpg" alt="img"> </span>
-																	<span class="item-name"> sed diam nonummy </span> <span class="price"> $ 140</span></a>
-																</div>
-																<div class="item"><a href="ads-details.html">
-																	<span class="item-carousel-thumb"> <img class="item-img" src="images/item/tp/Image00013.jpg" alt="img"> </span><span class="item-name"> feugiat nulla facilisis </span> <span class="price"> $ 140 </span></a></div>
-																	<div class="item"><a href="ads-details.html">
-																		<span class="item-carousel-thumb"> <img class="item-img" src="images/item/3.jpg" alt="img"> </span> <span class="item-name"> praesent luptatum zzril </span>
-																		<span class="price"> $ 220 </span></a></div>
-																		<div class="item"><a href="ads-details.html">
-																			<span class="item-carousel-thumb"> <img class="item-img" src="images/item/4.jpg" alt="img"> </span> <span class="item-name"> delenit augue duis dolore </span>
-																			<span class="price"> $ 120 </span></a></div>
-																			<div class="item"><a href="ads-details.html">
-																				<span class="item-carousel-thumb"> <img class="item-img" src="images/item/6.jpg" alt="img"> </span> <span class="item-name"> te feugait nulla facilisi </span>
-																				<span class="price"> $ 251 </span></a></div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
+<div style="clear: both"></div>
+<div class="col-lg-12 content-box ">
+	<div class="row row-featured">
+			<div class="col-lg-12  box-title ">
+				<div class="inner"><h2><span>Sponsored </span>
+					Products <a href="{{url('/all-featured-products')}}" class="sell-your-item"> View more <i class="  icon-th-list"></i> </a></h2>
+				</div>
+			</div>
+			<div style="clear: both"></div>
+			<div class=" relative  content featured-list-row clearfix">
+				<nav class="slider-nav has-white-bg nav-narrow-svg">
+					<a class="prev">
+						<span class="nav-icon-wrap"></span>
+					</a>
+					<a class="next">
+						<span class="nav-icon-wrap"></span>
+					</a>
+				</nav>
+				<div class="no-margin featured-list-slider ">
+				@foreach($featured_products as $f_product)
+					<div class="item">
+						<a href="ads-details-automobile.html">
+							<span class="item-carousel-thumb">
+
+								<img class="img-responsive" 
+									src="<?php
+										if (isset($f_product['image'][0]['image'])) {
+											echo product_images_path().$f_product['image'][0]['image'];
+										}else{
+											echo"";
+										}
+										?>" alt="img">
+							</span>
+							<span class="item-name"> {{ $f_product['name'] }} </span>
+							<span class="price"> GH{{ $f_product['single_price'] }}</span>
+						</a>
+				</div>
+				@endforeach
+			</div>
+		</div>
+	</div>
+</div>
 																<div class="col-lg-12 content-box ">
 																	<div class="row row-featured">
 																		<div style="clear: both"></div>

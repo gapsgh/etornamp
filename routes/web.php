@@ -22,6 +22,9 @@ Route::resource('categories', web\CategoryController::class);
  Route::get('/all-categories', 'web\CategoryController@allsubs');
  Route::get('categories/{id}/{slug}', 'web\CategoryController@show');
 
+ Route::get('/all-featured-products', 'web\HomeController@allfeatured');
+
+
 Route::resource('companies', web\CompanyController::class);
 Route::resource('products', web\ProductController::class);
 Route::get('/products/create/success', ['as'=>'product_saved_path','uses'=> 'web\ProductController@savesuccess']);

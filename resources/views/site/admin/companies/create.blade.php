@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col-md-8 page-content">
 				<div class="inner-box category-content">
-					<h2 class="title-2"><i class="icon-user-add"></i> Create your business account, Its free </h2>
+					<h2 class="title-2"><i class="icon-user-add"></i> Create your business account, Its free  </h2>
 					<div class="row">
 						<div class="col-sm-12">
 						@if (count($errors) > 0)
@@ -28,35 +28,48 @@
 									<div class="form-group required">
 										<label class="col-md-4 control-label">Company/Business Name <sup>*</sup></label>
 										<div class="col-md-6">
-											<input name="name" placeholder="Business Name" class="form-control input-md" required="" type="text">
+											<input name="name" placeholder="Business Name" class="form-control input-md" value="{{ old('name') }}" required type="text">
 										</div>
 									</div>
 
 									<div class="form-group required">
+										<label class="col-md-4 control-label">Company/Business Location <sup>*</sup></label>
+										<div class="col-md-4">
+											<input name="company_location" placeholder="Select Business Location" value="{{ old('company_location') }}" class="form-control input-md" readonly="" type="text" required>
+										</div>
+										<div class="col-md-2">
+											<a class="btn  btn-primary" data-toggle="modal" href="#changeLocation"><i class=" icon-location-2"></i> Select Location </a>
+										</div>
+
+									</div>
+
+
+
+									<div class="form-group ">
 										<label class="col-md-4 control-label">Registration Number</label>
 										<div class="col-md-6">
-											<input name="registration_number" placeholder="Company Registration Number" class="form-control input-md" type="text">
+											<input name="registration_number" placeholder="Company Registration Number" value="{{ old('registration_number') }}" class="form-control input-md" type="text">
 										</div>
 									</div>
 
 									<div class="form-group required">
 										<label class="col-md-4 control-label">Address</label>
 										<div class="col-md-6">
-											<input name="address" placeholder="Company Address" class="form-control input-md" type="text">
+											<input name="address" value="{{ old('address') }}" placeholder="Company Address" class="form-control input-md" type="text">
 										</div>
 									</div>
 
 									<div class="form-group required">
 										<label class="col-md-4 control-label">Working Hours</label>
 										<div class="col-md-6">
-											<input name="working_hours" placeholder="Company Working Hours" class="form-control input-md" type="text">
+											<input name="working_hours" value="{{ old('working_hours') }}" placeholder="Company Working Hours" class="form-control input-md" type="text">
 										</div>
 									</div>
 
 									<div class="form-group required">
 										<label class="col-md-4 control-label">Phone Number <sup>*</sup></label>
 										<div class="col-md-5">
-											<input name="number" placeholder="Phone Number" class="form-control input-md" type="text">
+											<input name="number" value="{{ old('number') }}" placeholder="Phone Number" class="form-control input-md" type="text" required>
 										</div>
 										<div class="col-md-1">
 											<label class="checkbox-inline" for="on_whatsapp">
@@ -70,7 +83,7 @@
 									<div class="form-group">
 										<label class="col-md-4 control-label" for="textarea">About Business</label>
 										<div class="col-md-6">
-											<textarea class="form-control" id="textarea" name="other_description" placeholder="A little About Your Business"></textarea>
+											<textarea class="form-control" id="textarea" name="other_description" placeholder="A little About Your Business">{{ old('other_description') }}</textarea>
 										</div>
 									</div>
 									<div class="form-group required">
@@ -78,7 +91,7 @@
 											<sup>*</sup>
 										</label>
 										<div class="col-md-6">
-											<input type="email" name="email" class="form-control" id="inputEmail3" placeholder="Email">
+											<input type="email" value="{{ old('email') }}" name="email" class="form-control" id="inputEmail3" placeholder="Email" required>
 										</div>
 									</div>
 
@@ -170,6 +183,25 @@
 		</div>
 
 	</div>
+
+<div class="modal fade" id="changeLocation" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+<h4 class="modal-title"><i class=" icon-location-2"></i> Select A Location </h4>
+</div>
+<div class="modal-body">
+
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+<button type="submit" class="btn btn-success pull-right">Send message!</button>
+</div>
+</div>
+</div>
+</div>
 
 </div>
 @stop
