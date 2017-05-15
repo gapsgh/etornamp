@@ -45,6 +45,7 @@ class HomeController extends Controller
     {
         $featured_products = Product::where('premiun_status','<>',0)
                                     ->where('active_status','1')
+                                    ->where('approval_status','1')
                                     ->with('image')
                                     ->with('category')
                                     ->with('company')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\web;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
+use App\Product;
 
 class CategoryController extends Controller
 {
@@ -59,6 +60,36 @@ class CategoryController extends Controller
         return view('site.pages.sub_categories',compact('sub_categories','category'));
     }
 
+
+        /**
+     * Display the Filter page for a caegory.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function filter($id, $slug)
+    {
+        //
+        // dd('theo');
+        $products = Product::where('category_id',$id)
+                                    ->where('active_status','1')
+                                    ->where('approval_status','1')
+                                    ->with('image')
+                                    ->with('category')
+                                    ->with('company')
+                                    ->with('rating')
+                                    ->with('visitors')
+                                    ->with('producr_location_city')
+                                    ->orderByRaw("FIELD(premiun_status , '1', '2', '3', '0') ASC")
+                                    ->paginate(15);
+
+        return view('site.pages.filter_page',compact('products'));
+    }
+
+
+            /**
+     * Display the Sub categories.
+     */
     public function allsubs()
     {
         //Get the sub categories of the current category

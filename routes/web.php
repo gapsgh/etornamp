@@ -21,13 +21,15 @@ Route::get('/map', function () {
 Route::resource('categories', web\CategoryController::class);
  Route::get('/all-categories', 'web\CategoryController@allsubs');
  Route::get('categories/{id}/{slug}', 'web\CategoryController@show');
+ Route::get('category/{id}/{slug}', ['as'=>'filer_path','uses'=> 'web\CategoryController@filter']);
 
  Route::get('/all-featured-products', 'web\HomeController@allfeatured');
+ Route::get('/products/create/success', ['as'=>'product_saved_path','uses'=> 'web\ProductController@savesuccess']);
+// Route::get('/products/{id}/{slug}', ['as'=>'product_path','uses'=> 'web\ProductController@show']);
 
 
 Route::resource('companies', web\CompanyController::class);
 Route::resource('products', web\ProductController::class);
-Route::get('/products/create/success', ['as'=>'product_saved_path','uses'=> 'web\ProductController@savesuccess']);
 Route::resource('phonenumbers', web\PhoneNumberController::class);
 Route::resource('emails', web\EmailController::class);
 Route::resource('productimages', web\ProductImageController::class);
