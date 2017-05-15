@@ -14,6 +14,7 @@ class Company extends Model
         'user_id',
         'logo',
         'working_hours',
+        'location_city',
         'other_description'
     ];
     
@@ -32,7 +33,7 @@ class Company extends Model
     }
 
     public function location_city(){
-        return $this->belongsTo('App\Location');
+        return $this->hasOne('App\Location','id','location_city');
     }
 
     public function product(){

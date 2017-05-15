@@ -77,6 +77,60 @@
 
 	</script>
 	<script type="text/javascript">
+
+(function(){
+//function for finding :contains case insensitive
+jQuery.expr[':'].icontains = function(a, i, m) {
+return jQuery(a).text().toUpperCase()
+  .indexOf(m[3].toUpperCase()) >= 0;
+};
+
+
+var searchTerm, panelContainerId,contained_elements;
+  $('#accordion_search_bar').on('change keyup paste click', function () {
+    searchTerm = $(this).val();
+    	$('#accordion > .panel').each(function () {
+	      panelContainerId = '#' + $(this).attr('id');
+	      console.log(searchTerm);
+
+	      $(panelContainerId + ':not(:icontains(' + searchTerm + '))').hide();
+	      $(panelContainerId + ':icontains(' + searchTerm + ')').show();
+
+
+	      if(searchTerm != ""){
+	      	contained_elements = jQuery(".location_li:icontains('" + searchTerm + "')");
+		      console.log(contained_elements.length);
+
+		      if(contained_elements.length > 0){
+		      		contained_elements.each(function () {
+			      		$(this).html($(this).data('original').replace(new RegExp(searchTerm, "gi"), "<span style='color:red; font-weight:bold;'>$&</span>"));
+			      		$(this).closest( "li").show();
+			      });
+		      }
+		      
+		      jQuery(".location_li:not(:icontains('" + searchTerm + "') )").each(function () {
+		      	$(this).html($(this).data('original'));
+		      	$(this).closest( "li").hide();
+
+		      });
+	      }else{
+	      	jQuery(".location_li:not(:icontains('" + searchTerm + "') )").each(function () {
+		      	$(this).html($(this).data('original'));
+		      	$(this).closest( "li").show();
+		      });
+	      	jQuery(".location_li:icontains('" + searchTerm + "')").each(function () {
+		      	$(this).html($(this).data('original'));
+		      	$(this).closest( "li").show();
+		      });
+	      }
+	      
+
+	    });
+	    
+});
+
+}());
+
     // Toast Notification
  /*   $(window).load(function() {
         setTimeout(function() {

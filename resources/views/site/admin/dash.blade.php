@@ -101,6 +101,18 @@
 														</div>
 
 														<div class="form-group required">
+															<label class="col-md-4 control-label">Company/Business Location <sup>*</sup></label>
+															<div class="col-md-4">
+																<input name="company_location" id="company_location" placeholder="Select Business Location" value="{{$company_details['location_city']['name']}}" class="form-control input-md" onkeypress="return false;" onkeydown="return false;" type="text" autocomplete="off" required>
+																<input type="hidden" name="location_city" id="location_city" value="{{$company_details['location_city']['id']}}">
+															</div>
+															<div class="col-md-2">
+																<a class="btn  btn-primary" data-toggle="modal" href="#changeLocation"><i class=" icon-location-2"></i> Select Location </a>
+															</div>
+
+														</div>
+
+														<div class="form-group required">
 															<label class="col-md-4 control-label">Registration Number</label>
 															<div class="col-md-6">
 																<input name="registration_number" value="{{$company_details['registration_number']}}" placeholder="Company Registration Number" class="form-control input-md" type="text">
@@ -261,7 +273,11 @@
 
 					</div>
 
+					@include('site.location_modal')
+
 				</div>
+
+				
 @stop
 
 @section('scripts')

@@ -10,6 +10,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'code',
         'single_price',
         'bulk_price',
         'bonus_percentage_single',
@@ -31,8 +32,8 @@ class Product extends Model
         return $this->belongsTo('App\Category');
     }
 
-     public function location_city(){
-    	return $this->belongsTo('App\Location');
+     public function producr_location_city(){
+    	return $this->hasOne('App\Location','id','location_city');
     }
 
 

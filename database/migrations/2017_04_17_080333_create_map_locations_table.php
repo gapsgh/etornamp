@@ -17,8 +17,8 @@ class CreateMapLocationsTable extends Migration
             $table->increments('id');
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->integer('lon');
-            $table->integer('lat');
+            $table->double('lon');
+            $table->double('lat');
             $table->timestamps();
         });
     }

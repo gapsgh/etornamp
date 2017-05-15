@@ -50,6 +50,7 @@ class HomeController extends Controller
                                     ->with('company')
                                     ->with('rating')
                                     ->with('visitors')
+                                    ->with('producr_location_city')
                                     ->paginate(15);
         // dd($featured_products);
         return view('site.pages.featured_products',compact('featured_products'));

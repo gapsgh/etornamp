@@ -35,7 +35,8 @@
 									<div class="form-group required">
 										<label class="col-md-4 control-label">Company/Business Location <sup>*</sup></label>
 										<div class="col-md-4">
-											<input name="company_location" placeholder="Select Business Location" value="{{ old('company_location') }}" class="form-control input-md" readonly="" type="text" required>
+											<input name="company_location" id="company_location" placeholder="Select Business Location" value="{{ old('company_location') }}" class="form-control input-md" onkeypress="return false;" onkeydown="return false;" type="text" autocomplete="off" required>
+											<input type="hidden" name="location_city" id="location_city" value="">
 										</div>
 										<div class="col-md-2">
 											<a class="btn  btn-primary" data-toggle="modal" href="#changeLocation"><i class=" icon-location-2"></i> Select Location </a>
@@ -184,25 +185,7 @@
 
 	</div>
 
-<div class="modal fade" id="changeLocation" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-<h4 class="modal-title"><i class=" icon-location-2"></i> Select A Location </h4>
-</div>
-<div class="modal-body">
-
-
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-<button type="submit" class="btn btn-success pull-right">Send message!</button>
-</div>
-</div>
-</div>
-</div>
-
+	@include('site.location_modal')
 </div>
 @stop
 
@@ -219,10 +202,15 @@
 		}
 	?>
 
-	<script type="text/javascript">
-		initialize_image_input('Comp_logo');
-	</script>
-	<script type="text/javascript">
+<script type="text/javascript">
+$('#company_location').on('change keyup paste click keypress keydown', function () {
+	return false;
+});
+
+initialize_image_input('Comp_logo');
+
+</script>
+<script type="text/javascript">
 	var pos = {
       	lat:5.6037168,
       	lng:-0.1869644

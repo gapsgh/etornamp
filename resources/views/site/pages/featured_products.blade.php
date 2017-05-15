@@ -84,7 +84,7 @@
 												 <span class="date">
 												 	<i class=" icon-clock"> </i> {{Carbon\Carbon::parse($f_product->created_at)->diffForHumans()}} 
 												 </span> - <span class="category">{{$f_product->category->name}} </span>- 
-												 <span class="item-location"><i class="fa fa-map-marker"></i> New York </span> 
+												 <span class="item-location"><i class="fa fa-map-marker"></i> {{$f_product->producr_location_city->name}} </span> 
 											</span>
 										</div>
 									</div>

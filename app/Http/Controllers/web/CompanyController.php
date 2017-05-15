@@ -8,6 +8,7 @@ use App\Company;
 use App\Email;
 use App\PhoneNumber;
 use App\MapLocation;
+use App\Location;
 
 use App\Http\Requests\companyRequest;
 
@@ -37,11 +38,20 @@ class CompanyController extends Controller
         if(\Auth::check()) {
             $user_id = \Auth::user()->id;
             $company = Company::where('user_id',$user_id)->get()->toArray();
+
+            $locations_raw = Location::where('level',1)->get()->toArray();
+            $locations = [];
+            foreach ($locations_raw as $key => $location) {
+                $sub_locations = Location::where('level',2)->where('parent_id',$location['id'])->get()->toArray();
+                $location['sub_locations'] = $sub_locations;
+                $locations[] = $location;
+            }
+            // dd($locations);
            
             if(!empty($company)){
                 return redirect('account/dashboard')->with('warning_message', 'User Can Only Create One Company Account');
             }else{
-                return view('site.admin.companies.create');
+                return view('site.admin.companies.create',compact('locations'));
             }
         }else{
             return redirect('/login');
@@ -78,6 +88,7 @@ class CompanyController extends Controller
 
         $fields['logo'] = $filename;
 
+        // dd($fields);
         //Ceate the company 
         $company = Company::create($fields);
 

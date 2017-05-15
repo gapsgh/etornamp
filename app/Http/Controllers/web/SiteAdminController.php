@@ -10,6 +10,7 @@ use App\PhoneNumber;
 use App\Product;
 use App\ProductImage;
 use App\ProductVisitors;
+use App\Location;
 
 class SiteAdminController extends Controller
 {
@@ -33,8 +34,9 @@ class SiteAdminController extends Controller
                                 ->with('phone_number')
                                 ->with('email')
                                 ->with('location')
+                                ->with('location_city')
                                 ->get()->toArray();
-        
+        // dd($company_details_data);
                                 
         if(!empty($company_details_data)){
             $company_details = $company_details_data[0];
@@ -107,10 +109,20 @@ class SiteAdminController extends Controller
                                     ->with('visitors')
                                     ->get()->toArray();
 
+        //Collect the lacations
+        $locations_raw = Location::where('level',1)->get()->toArray();
+            $locations = [];
+            foreach ($locations_raw as $key => $location) {
+                $sub_locations = Location::where('level',2)->where('parent_id',$location['id'])->get()->toArray();
+                $location['sub_locations'] = $sub_locations;
+                $locations[] = $location;
+            }
+
          return view('site.admin.dash', compact('company_details',
                                             'company_logo_path',
                                             'products',
                                             'visitors',
+                                            'locations',
                                             'unapproved_products',
                                             'approved_products'));
     }

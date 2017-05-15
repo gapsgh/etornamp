@@ -8,6 +8,7 @@ use App\Product;
 use App\Company;
 use App\Category;
 use App\ProductImage;
+use App\Location;
 use Image;
 use Illuminate\Support\Facades\File;
 
@@ -35,7 +36,25 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {  
+        $user_id = '';
+        if(\Auth::check()) {
+            $user_id = \Auth::user()->id;
+        }
+        $company_details_data = Company::where('user_id','=',$user_id)
+                                ->with('phone_number')
+                                ->with('email')
+                                ->with('location')
+                                ->with('location_city')
+                                ->get()->toArray();
+
+        $company_details = $company_details_data[0];
+
+        if(empty($company_details_data)){
+            //send the ueser to the create Company page
+             return redirect('companies/create')->with('info_message','You have to create a business profile to start listing!!');
+        }
+
         $category_level_1 = Category::where('level',1)->get()->toArray();
         
         $categories = [];
@@ -46,8 +65,17 @@ class ProductController extends Controller
             $categories[] = $category_1;
         }
         // dd($categories);
+        
+        //Collect the lacations
+        $locations_raw = Location::where('level',1)->get()->toArray();
+        $locations = [];
+        foreach ($locations_raw as $key => $location) {
+            $sub_locations = Location::where('level',2)->where('parent_id',$location['id'])->get()->toArray();
+            $location['sub_locations'] = $sub_locations;
+            $locations[] = $location;
+        }
 
-        return view('site.admin.products.create',compact('categories'));
+        return view('site.admin.products.create',compact('categories','company_details','locations'));
     }
 
     /**
@@ -100,6 +128,9 @@ class ProductController extends Controller
              $fields['approval_status'] = 1;   //If the product is not featured, it does not need approval
         }
         // dd($fields);
+        
+        //generate a unique code for the prduct
+        $fields['code'] = $this->getProductCode();
 
         //Add the product 
         $product = Product::create($fields);
@@ -177,6 +208,14 @@ class ProductController extends Controller
 
 
     }
+
+    public function getProductCode(){
+        do{
+            $rand = generateRandomString(8);
+        }while(!empty(Product::where('code',$rand)->first()));
+        return $rand;
+    }
+
 
     /**
      * Display the specified resource.
