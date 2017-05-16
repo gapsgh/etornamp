@@ -62,12 +62,14 @@
 	<script src="{{asset('/assets/js/fileinput.min.js')}}" type="text/javascript"></script>
 	
     <script type="text/javascript" src="{{asset('/assets/js/materialize.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/assets/plugins/lightGallery-master/dist/js/lightgallery.js')}}"></script>
+
 
 	<script type="text/javascript">
 		function initialize_image_input(input_id) {
         $("#"+input_id).fileinput({
             'showUpload':false,
-            'maxFileSize':2000,
+            'maxFileSize':10000,
             'allowedFileTypes':['image'],
             'allowedFileExtensions':['jpg', 'png'],
             'allowedPreviewTypes':['image'],

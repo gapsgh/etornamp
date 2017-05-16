@@ -22,7 +22,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top" style="min-height: 82px; background: #fff;">
+        <nav class="navbar navbar-default navbar-static-top" style="min-height: 82px; background: #fff; background-image: url(/images/hbg2.jpg);">
             <div class="container">
                 <div class="navbar-header" style=" margin-top: 6px;">
 

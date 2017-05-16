@@ -114,17 +114,17 @@
 										<label class="col-md-3 control-label" for="textarea"> Picture </label>
 										<div class="col-md-8">
 											<div class="mb10">
-												<input id="product_image1" type="file" name="product_image1" class="file" data-preview-file-type="image" required="">
+												<input id="product_image1" type="file" name="product_image1" class="file" data-preview-file-type="image" required="" accept="image/*">
 												<span class="help-block">This Would Be Your Main Image</span>
 											</div>
 											<div class="mb10">
-												<input id="product_image2" type="file" name="product_image2" class="file" data-preview-file-type="image">
+												<input id="product_image2" type="file" name="product_image2" class="file" data-preview-file-type="image" accept="image/*">
 											</div>
 											<div class="mb10">
-												<input id="product_image3" type="file" name="product_image3" class="file" data-preview-file-type="image">
+												<input id="product_image3" type="file" name="product_image3" class="file" data-preview-file-type="image" accept="image/*">
 											</div>
 											<div class="mb10">
-												<input id="product_image4" type="file" name="product_image4" class="file" data-preview-file-type="image">
+												<input id="product_image4" type="file" name="product_image4" class="file" data-preview-file-type="image" accept="image/*">
 											</div>
 											<p class="help-block">
 												Add up to 4 photos. Use a real image of your product.

@@ -143,10 +143,35 @@ class ProductController extends Controller
         // 
         $Product_Image = $request->file('product_image1');
         $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-        $destination_path = base_path() . '/public/uploads/product_images/';
+        $destination_path = base_path() . '/public/uploads/product_images_raw/';
+        $destination_actua_path = base_path() . '/public/uploads/product_images/';
         $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
         $Product_Image->move($destination_path, $filename);
-        Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+        
+        $new_image = Image::make($destination_path.$filename);
+        $new_image_size = $new_image->filesize();
+         if($new_image_size < 2000000){
+            //Save the image with a 80% compression
+            $new_image->save($destination_actua_path.$filename,80);
+         }
+         if(2000000 <= $new_image_size and $new_image_size <= 4000000){
+            //Save the image with a 60% compression
+            $new_image->save($destination_actua_path.$filename,50);
+         }
+         if(4000001 <= $new_image_size and $new_image_size <= 5000000){
+            //Save the image with a 65% compression
+            $new_image->save($destination_actua_path.$filename,35);
+         }
+         if(5000001 <= $new_image_size and $new_image_size <= 6000000){
+            //Save the image with a 60% compression
+            $new_image->save($destination_actua_path.$filename,30);
+         }
+         if(6000001 <= $new_image_size){
+            //Save the image with a 50% compression
+            $new_image->save($destination_actua_path.$filename,20);
+         }
+
+        $new_image->fit(200)->save($thumbnail_path.$filename);
         $image_data=[
                     'image' => $filename,
                     'priority' => 1,
@@ -157,7 +182,8 @@ class ProductController extends Controller
         if(!empty($request->file('product_image2'))){
             $Product_Image = $request->file('product_image2');
             $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $Product_Image->move($destination_path, $filename);
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
@@ -171,7 +197,8 @@ class ProductController extends Controller
         if(!empty($request->file('product_image3'))){
             $Product_Image = $request->file('product_image3');
             $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $Product_Image->move($destination_path, $filename);
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
@@ -185,7 +212,8 @@ class ProductController extends Controller
         if(!empty($request->file('product_image4'))){
             $Product_Image = $request->file('product_image4');
             $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $Product_Image->move($destination_path, $filename);
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
@@ -290,7 +318,8 @@ class ProductController extends Controller
             $Product_Image = $request->file('product_image1');
             $image_name = explode('.' ,$fields['product_image1_image'] )[0];
             $filename = $image_name.'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             $Product_Image->move($destination_path, $filename);
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
@@ -298,7 +327,8 @@ class ProductController extends Controller
         }elseif(!empty($request->file('product_image1'))  and empty($fields['product_image1_image'])){
             $Product_Image = $request->file('product_image1');
             $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             $Product_Image->move($destination_path, $filename);
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
@@ -314,7 +344,8 @@ class ProductController extends Controller
             $Product_Image = $request->file('product_image2');
             $image_name = explode('.' ,$fields['product_image2_image'] )[0];
             $filename = $image_name.'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             $Product_Image->move($destination_path, $filename);
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
@@ -322,7 +353,8 @@ class ProductController extends Controller
         }elseif(!empty($request->file('product_image2'))  and empty($fields['product_image2_image'])){
             $Product_Image = $request->file('product_image2');
             $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             $Product_Image->move($destination_path, $filename);
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
@@ -338,7 +370,8 @@ class ProductController extends Controller
             $Product_Image = $request->file('product_image3');
             $image_name = explode('.' ,$fields['product_image3_image'] )[0];
             $filename = $image_name.'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             $Product_Image->move($destination_path, $filename);
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
@@ -346,7 +379,8 @@ class ProductController extends Controller
         }elseif(!empty($request->file('product_image3'))  and empty($fields['product_image3_image'])){
             $Product_Image = $request->file('product_image3');
             $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             $Product_Image->move($destination_path, $filename);
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
@@ -362,7 +396,8 @@ class ProductController extends Controller
             $Product_Image = $request->file('product_image4');
             $image_name = explode('.' ,$fields['product_image4_image'] )[0];
             $filename = $image_name.'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             $Product_Image->move($destination_path, $filename);
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
@@ -370,7 +405,8 @@ class ProductController extends Controller
         }elseif(!empty($request->file('product_image4'))  and empty($fields['product_image4_image'])){
             $Product_Image = $request->file('product_image4');
             $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images/';
+            $destination_path = base_path() . '/public/uploads/product_images_raw/';
+            $destination_actua_path = base_path() . '/public/uploads/product_images/';
             $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
             $Product_Image->move($destination_path, $filename);
             Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);

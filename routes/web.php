@@ -17,6 +17,9 @@ Route::get('/', 'web\HomeController@index');
 Route::get('/map', function () {
     return view('site.pages.mapadd');
 });
+Route::get('/gal', function () {
+    return view('site.pages.gal');
+});
 
 Route::resource('categories', web\CategoryController::class);
  Route::get('/all-categories', 'web\CategoryController@allsubs');

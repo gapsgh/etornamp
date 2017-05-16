@@ -8,8 +8,11 @@
 <link href="{{asset('/assets/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 
 <link href="{{asset('/assets/css/style.css')}}" rel="stylesheet">
-<link href="{{asset('/assets/css/my.css')}}" rel="stylesheet">
 
 <link href="{{asset('/assets/css/owl.carousel.css')}}" rel="stylesheet">
 <link href="{{asset('/assets/css/owl.theme.css')}}" rel="stylesheet">
 <link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<link href="{{asset('/assets/plugins/lightGallery-master/dist/css/lightgallery.css')}}" rel="stylesheet">
+
+<link href="{{asset('/assets/css/my.css')}}" rel="stylesheet">
