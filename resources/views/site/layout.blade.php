@@ -63,7 +63,14 @@
 	
     <script type="text/javascript" src="{{asset('/assets/js/materialize.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/assets/plugins/lightGallery-master/dist/js/lightgallery.js')}}"></script>
-
+	
+	<script src="{{asset('/assets/js/owl.carousel.min.js')}}"></script>
+ 
+	<script src="{{asset('/assets/js/jquery.matchHeight-min.js')}}"></script>
+	 
+	<script src="{{asset('/assets/js/hideMaxListItem.js')}}"></script>
+	 
+	<script src="{{asset('/assets/plugins/bxslider/jquery.bxslider.min.js')}}"></script>
 
 	<script type="text/javascript">
 		function initialize_image_input(input_id) {

@@ -8,6 +8,7 @@ use App\Product;
 use App\Company;
 use App\Category;
 use App\ProductImage;
+use App\ProductVisitors;
 use App\Location;
 use Image;
 use Illuminate\Support\Facades\File;
@@ -139,39 +140,7 @@ class ProductController extends Controller
             $product_id = $product->id;
         }
 
-        // Add Product Images
-        // 
-        $Product_Image = $request->file('product_image1');
-        $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-        $destination_path = base_path() . '/public/uploads/product_images_raw/';
-        $destination_actua_path = base_path() . '/public/uploads/product_images/';
-        $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
-        $Product_Image->move($destination_path, $filename);
-        
-        $new_image = Image::make($destination_path.$filename);
-        $new_image_size = $new_image->filesize();
-         if($new_image_size < 2000000){
-            //Save the image with a 80% compression
-            $new_image->save($destination_actua_path.$filename,80);
-         }
-         if(2000000 <= $new_image_size and $new_image_size <= 4000000){
-            //Save the image with a 60% compression
-            $new_image->save($destination_actua_path.$filename,50);
-         }
-         if(4000001 <= $new_image_size and $new_image_size <= 5000000){
-            //Save the image with a 65% compression
-            $new_image->save($destination_actua_path.$filename,35);
-         }
-         if(5000001 <= $new_image_size and $new_image_size <= 6000000){
-            //Save the image with a 60% compression
-            $new_image->save($destination_actua_path.$filename,30);
-         }
-         if(6000001 <= $new_image_size){
-            //Save the image with a 50% compression
-            $new_image->save($destination_actua_path.$filename,20);
-         }
-
-        $new_image->fit(200)->save($thumbnail_path.$filename);
+        $filename = $this->save_image( $request->file('product_image1') );
         $image_data=[
                     'image' => $filename,
                     'priority' => 1,
@@ -180,13 +149,7 @@ class ProductController extends Controller
         ProductImage::create($image_data);
         
         if(!empty($request->file('product_image2'))){
-            $Product_Image = $request->file('product_image2');
-            $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images_raw/';
-            $destination_actua_path = base_path() . '/public/uploads/product_images/';
-            $Product_Image->move($destination_path, $filename);
-            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
-            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+            $filename = $this->save_image( $request->file('product_image2') );
             $image_data=[
                         'image' => $filename,
                         'priority' => 2,
@@ -194,14 +157,9 @@ class ProductController extends Controller
                         ];
             ProductImage::create($image_data);
         }
+
         if(!empty($request->file('product_image3'))){
-            $Product_Image = $request->file('product_image3');
-            $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images_raw/';
-            $destination_actua_path = base_path() . '/public/uploads/product_images/';
-            $Product_Image->move($destination_path, $filename);
-            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
-            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+            $filename = $this->save_image( $request->file('product_image3') );
             $image_data=[
                         'image' => $filename,
                         'priority' => 3,
@@ -210,13 +168,7 @@ class ProductController extends Controller
             ProductImage::create($image_data);
         }
         if(!empty($request->file('product_image4'))){
-            $Product_Image = $request->file('product_image4');
-            $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
-            $destination_path = base_path() . '/public/uploads/product_images_raw/';
-            $destination_actua_path = base_path() . '/public/uploads/product_images/';
-            $Product_Image->move($destination_path, $filename);
-            $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
-            Image::make($destination_path.$filename)->fit(200)->save($thumbnail_path.$filename);
+            $filename = $this->save_image( $request->file('product_image4') );
             $image_data=[
                         'image' => $filename,
                         'priority' => 4,
@@ -237,6 +189,54 @@ class ProductController extends Controller
 
     }
 
+    public function save_image($image){
+        // Add Product Images
+        $Product_Image = $image;
+        $filename = date_timestamp_get(date_create()).'.' . $Product_Image->getClientOriginalExtension();
+        $destination_path = base_path() . '/public/uploads/product_images_raw/';
+        $destination_actua_path = base_path() . '/public/uploads/product_images/';
+        $destination_actua_path_large = base_path() . '/public/uploads/product_images_large/';
+        $thumbnail_path = base_path() . '/public/uploads/product_images_thumb/';
+
+        $watermark_path = base_path() . '/public/images/watermarks/full.png';
+        $Product_Image->move($destination_path, $filename);
+        
+        $new_image = Image::make($destination_path.$filename);
+        $large_image = Image::make($destination_path.$filename);
+        $new_image_size = $new_image->filesize();
+         if($new_image_size < 2000000){
+            //Save the image with a 80% compression
+            $new_image->save($destination_actua_path.$filename,80);
+            $large_image->fit(816,460)->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,85);
+         }
+         if(2000000 <= $new_image_size and $new_image_size <= 4000000){
+            //Save the image with a 60% compression
+            $new_image->save($destination_actua_path.$filename,50);
+            $large_image->fit(816,460)->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,60);
+
+         }
+         if(4000001 <= $new_image_size and $new_image_size <= 5000000){
+            //Save the image with a 65% compression
+            $new_image->save($destination_actua_path.$filename,35);
+            $large_image->fit(816,460)->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,45);
+         }
+         if(5000001 <= $new_image_size and $new_image_size <= 6000000){
+            //Save the image with a 60% compression
+            $new_image->save($destination_actua_path.$filename,30);
+            $large_image->fit(816,460)->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,40);
+         }
+         if(6000001 <= $new_image_size){
+            //Save the image with a 50% compression
+            $new_image->save($destination_actua_path.$filename,20);
+            $large_image->fit(816,460)->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,30);
+         }
+
+        $new_image->fit(200)->save($thumbnail_path.$filename);
+
+        return $filename;
+
+        }
+
     public function getProductCode(){
         do{
             $rand = generateRandomString(8);
@@ -251,6 +251,23 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function showDetails($id, $slug)
+    {
+        $product = Product::where('id',$id)
+                            ->with('image')
+                            ->with('category')
+                            ->with('company.email','company.phone_number','company.company_location_city')
+                            ->with('rating')
+                            ->with('visitors')
+                            ->with('producr_location_city')
+                            ->first();
+        //Add one visitor
+         $product_visitor =[ 'product_id' => $id];
+            ProductVisitors::create($product_visitor);
+
+        return view('site.pages.details_page',compact('id','product'));
+    }
+
     public function show($id)
     {
         //

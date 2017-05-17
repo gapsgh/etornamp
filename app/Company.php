@@ -32,6 +32,9 @@ class Company extends Model
     	return $this->hasMany('App\MapLocation');
     }
 
+    public function company_location_city(){
+        return $this->hasOne('App\Location','id','location_city');
+    }
     public function location_city(){
         return $this->hasOne('App\Location','id','location_city');
     }

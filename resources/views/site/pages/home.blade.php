@@ -44,7 +44,7 @@
 				</div>
 				@foreach($categories as $category)
 					<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-						<a href="/categories/{{$category['id']}}/{{ strtolower(str_replace(' ','-',$category['name']) ) }}"><img src="/uploads/category_images_thumb/{{$category['image']}}" class="img-responsive" alt="img">
+						<a href="/categories/{{$category['id']}}/{{ make_slug($category['name']) }}"><img src="/uploads/category_images_thumb/{{$category['image']}}" class="img-responsive" alt="img">
 							<h6> {{$category['name']}} </h6></a>
 					</div>
 				@endforeach

@@ -24,12 +24,16 @@ Route::get('/gal', function () {
 Route::resource('categories', web\CategoryController::class);
  Route::get('/all-categories', 'web\CategoryController@allsubs');
  Route::get('categories/{id}/{slug}', 'web\CategoryController@show');
+
+ //Filter page
  Route::get('category/{id}/{slug}', ['as'=>'filer_path','uses'=> 'web\CategoryController@filter']);
+
+//Add Details pagee 
+ Route::get('/product/{id}/{slug}', ['as'=>'product_details','uses'=> 'web\ProductController@showDetails']);
 
  Route::get('/all-featured-products', 'web\HomeController@allfeatured');
  Route::get('/products/create/success', ['as'=>'product_saved_path','uses'=> 'web\ProductController@savesuccess']);
 // Route::get('/products/{id}/{slug}', ['as'=>'product_path','uses'=> 'web\ProductController@show']);
-
 
 Route::resource('companies', web\CompanyController::class);
 Route::resource('products', web\ProductController::class);

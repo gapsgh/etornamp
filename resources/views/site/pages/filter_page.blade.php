@@ -146,8 +146,13 @@ by </a>
 
 					
 
-{{-- @include('site.pages.filter.list_view') --}}
+@if(isset($_GET['view']) and $_GET['view'] == 'list')
+@include('site.pages.filter.list_view')
+@elseif(isset($_GET['view']) and $_GET['view'] == 'gallery')
 @include('site.pages.filter.gallery_view')
+@else
+@include('site.pages.filter.list_view')
+@endif
 
 					<div class="tab-box  save-search-bar text-center">
 						{{-- <a href=""> 

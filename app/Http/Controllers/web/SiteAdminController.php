@@ -87,7 +87,7 @@ class SiteAdminController extends Controller
         }else{
             //find the visitors for the cuurent customer/company
             $visitors = count(ProductVisitors::whereIn('product_id',$product_ids)
-                                        ->get()->toArray());
+                                        ->get()->toArray())/2;
 
         }
 

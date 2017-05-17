@@ -15,4 +15,7 @@
 
 <link href="{{asset('/assets/plugins/lightGallery-master/dist/css/lightgallery.css')}}" rel="stylesheet">
 
+ 
+<link href="{{asset('/assets/plugins/bxslider/jquery.bxslider.css')}}" rel="stylesheet"/>
+
 <link href="{{asset('/assets/css/my.css')}}" rel="stylesheet">
