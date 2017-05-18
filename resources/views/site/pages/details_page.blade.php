@@ -19,7 +19,7 @@
 <div class="col-sm-9 page-content col-thin-right">
 <div class="inner inner-box ads-details-wrapper">
 <h2> {{$product->name}}
-<small class="label label-default adlistingtype">Company ad</small>
+<small class="label label-default adlistingtype">{{$product->company->company_account_type->name}} ad</small>
 </h2>
 <span class="info-row"> <span class="date"><i class=" icon-clock"> </i> {{Carbon\Carbon::parse($product->created_at)->diffForHumans()}}  </span> - <span class="category">{{$product->category->name}} </span>- <span class="item-location"><i class="fa fa-map-marker"></i> {{$product->producr_location_city->name}} </span> </span>
 <div class="ads-image ads-img-v2">

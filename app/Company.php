@@ -11,6 +11,7 @@ class Company extends Model
         'name',
         'registration_number',
         'address',
+        'account_type',
         'user_id',
         'logo',
         'working_hours',
@@ -40,7 +41,11 @@ class Company extends Model
     }
 
     public function product(){
-    	return $this->hasMany('App\Product');
+        return $this->hasMany('App\Product');
+    }
+
+    public function company_account_type(){
+        return $this->hasOne('App\AccountType','id','account_type');
     }
 
 

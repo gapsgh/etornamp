@@ -164,6 +164,25 @@
 															</div>
 														</div>
 
+														<div class="form-group">
+															<label class="col-md-3 control-label">Registered As</label>
+															<div class="col-md-8">
+																<label class="radio-inline" for="radios-0">
+																	<input name="account_type" id="radios-0" value="1" type="radio" <?php if($company_details['account_type'] =='1'){
+																		echo "checked";
+																		} ?> >
+																	<strong>A Seller </strong>
+																</label>
+																<label class="radio-inline" for="radios-1">
+																	<input name="account_type" id="radios-1" value="2" type="radio" <?php if($company_details['account_type'] =='2'){
+																		echo "checked";
+																		} ?> >
+																	<strong>A Make/Producer</strong>
+																</label>
+																<span class="help-block">Specify whether you produce the product or just sell them</span>
+															</div>
+														</div>
+
 															
 														<div class="form-group">
 															<label class="col-md-4 control-label"></label>

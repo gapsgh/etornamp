@@ -9,7 +9,7 @@
 				}
 			?>
 			
-			<a href="#">
+			<a href="/products/{{$product['id']}}/edit">
 				<img class="thumbnail  img-responsive" 
 				src="<?php
 					if (isset($product['image'][0]['image'])) {
@@ -25,7 +25,7 @@
 			<div>
 				<p>
 					<strong> 
-						<a href="ads-details.html" title="Brend New Nexus 4">
+						<a href="/products/{{$product['id']}}/edit" title="Brend New Nexus 4">
 							{{$product['name']}}
 						</a> 
 					</strong>

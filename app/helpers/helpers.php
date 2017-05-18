@@ -16,6 +16,10 @@ function product_images_path(){
 	return '/uploads/product_images_thumb/';
 }
 
+function product_images_full_path(){
+	return '/uploads/product_images/';
+}
+
 function product_images_large_path(){
 	return '/uploads/product_images_large/';
 }

@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col-md-8 page-content">
 				<div class="inner-box category-content">
-					<h2 class="title-2"><i class="icon-user-add"></i> Create your business account, Its free  </h2>
+					<h2 class="title-2"><i class="fa fa-home" aria-hidden="true"></i> Create your business account, Its free  </h2>
 					<div class="row">
 						<div class="col-sm-12">
 						@if (count($errors) > 0)
@@ -25,6 +25,21 @@
 							<form action="/companies" method="POST" class="form-horizontal" enctype="multipart/form-data">
 								{{ csrf_field() }}
 								<fieldset>
+									<div class="form-group">
+										<label class="col-md-3 control-label">Registering As</label>
+										<div class="col-md-8">
+											<label class="radio-inline" for="radios-0">
+												<input name="account_type" id="radios-0" value="1" type="radio" checked="checked">
+												<strong>A Seller </strong>
+											</label>
+											<label class="radio-inline" for="radios-1">
+												<input name="account_type" id="radios-1" value="2" type="radio">
+												<strong>A Make/Producer</strong>
+											</label>
+											<span class="help-block">Specify whether you produce the product or just sell them</span>
+										</div>
+									</div>
+
 									<div class="form-group required">
 										<label class="col-md-4 control-label">Company/Business Name <sup>*</sup></label>
 										<div class="col-md-6">

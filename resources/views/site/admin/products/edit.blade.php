@@ -45,6 +45,18 @@
 										</div>
 									</div>
 
+									<div class="form-group required">
+										<label class="col-md-3 control-label">Product Location <sup>*</sup></label>
+										<div class="col-md-5">
+											<input name="company_location" id="company_location" placeholder="Select Business Location" value="{{$product['producr_location_city']['name']}}" class="form-control input-md" onkeypress="return false;" onkeydown="return false;" type="text" autocomplete="off" required>
+											<input type="hidden" name="location_city" id="location_city" value="{{$product['producr_location_city']['id']}}">
+										</div>
+										<div class="col-md-2">
+											<a class="btn  btn-primary" data-toggle="modal" href="#changeLocation"><i class=" icon-location-2"></i> Select Location </a>
+										</div>
+
+									</div>
+
 									<div class="form-group">
 										<label class="col-md-3 control-label" for="textarea">Describe ad </label>
 										<div class="col-md-8">
@@ -321,7 +333,7 @@
 			</div>
 
 		</div>
-
+		@include('site.location_modal')
 	</div>
 
 @stop
