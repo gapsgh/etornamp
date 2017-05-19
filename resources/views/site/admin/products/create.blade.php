@@ -13,7 +13,7 @@
 					<h2 class="title-2 uppercase"><strong> <i class="icon-docs"></i> Post Your Ghana Made Product/Service</strong></h2>
 					<div class="row">
 						<div class="col-sm-12">
-							<form action="/products" method="POST" class="form-horizontal" enctype="multipart/form-data">
+							<form action="{{url('/products')}}" method="POST" class="form-horizontal" enctype="multipart/form-data">
 								{{ csrf_field() }}
 								<fieldset>	
 

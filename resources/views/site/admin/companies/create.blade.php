@@ -22,7 +22,7 @@
 		                        </ul>
 		                    </div>
 		                @endif
-							<form action="/companies" method="POST" class="form-horizontal" enctype="multipart/form-data">
+							<form action="{{url('/companies')}}" method="POST" class="form-horizontal" enctype="multipart/form-data">
 								{{ csrf_field() }}
 								<fieldset>
 									<div class="form-group">
@@ -182,6 +182,11 @@
 
 			<div class="col-md-4 reg-sidebar">
 				<div class="reg-sidebar-inner text-center">
+
+				<div class="inner-box no-padding">
+					<img class="img-responsive" src="{{url('images/add3.jpg')}}" alt="">
+				</div>
+
 					<div class="promo-text-box"><i class=" icon-picture fa fa-4x icon-color-1"></i>
 						<h3><strong>Post a Free Product or Service</strong></h3>
 						<p> Post your free product or service ads with us. Get your product onto the large family of GH products </p>
@@ -194,6 +199,8 @@
 						<h3><strong>Create your Favorite ads list.</strong></h3>
 						<p> Boost your favorite products by setting a list of your best products or service.</p>
 					</div>
+
+				
 				</div>
 			</div>
 		</div>

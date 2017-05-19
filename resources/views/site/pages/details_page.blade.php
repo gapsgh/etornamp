@@ -8,8 +8,8 @@
 <div class="container">
 <ol class="breadcrumb pull-left">
 <li><a href="#"><i class="icon-home fa"></i></a></li>
-<li><a href="category.html">All Ads</a></li>
-<li><a href="sub-category-sub-location.html">Electronics</a></li>
+<li><a href="#">All Ads</a></li>
+<li><a href="#">Electronics</a></li>
 <li class="active">Mobile Phones</li>
 </ol>
 <div class="pull-right backtolist"><a href="sub-category-sub-location.html"> <i class="fa fa-angle-double-left"></i> Back to Results</a></div>
@@ -28,7 +28,7 @@
 <ul class="bxslider">
 @if( count($product->image) > 0 )
 	@foreach($product->image as $image)
-		<li><img src="{{product_images_large_path().$image->image}}" alt="img"/></li>
+		<li><img src="{{url(product_images_large_path().$image->image)}}" alt="img"/></li>
 	@endforeach
 @endif
 
@@ -40,7 +40,7 @@
 <div id="bx-pager">
 @if( count($product->image) > 0 )
 	@foreach($product->image as $key => $image)
-		<a class="thumb-item-link" data-slide-index="{{$key}}" href=""><img src="{{product_images_large_path().$image->image}}" alt="img"/></a>
+		<a class="thumb-item-link" data-slide-index="{{$key}}" href=""><img src="{{url(product_images_large_path().$image->image)}}" alt="img"/></a>
 	@endforeach
 @endif
 </div>
@@ -95,7 +95,7 @@
 </div>
 </div>
 </div>
-<div class="content-footer text-left"><a class="btn  btn-primary" data-toggle="modal" href="#contactAdvertiser"><i class=" icon-mail-2"></i> Send a message </a> <a class="btn  btn-info"><i class=" icon-phone-1"></i> 01680 531 352 </a></div>
+<div class="content-footer text-left"><a class="btn  btn-primary" data-toggle="modal" href="#contactAdvertiser"><i class=" icon-mail-2"></i> Send a message </a> <a href="tel:{{$product->company->phone_number[0]->number}}" class="btn  btn-info"><i class=" icon-phone-1"></i> {{$product->company->phone_number[0]->number}}  Call Now</a></div>
 </div>
 </div>
  
@@ -114,7 +114,7 @@
 </div>
 <div class="user-ads-action">
 <a href="#contactAdvertiser" data-toggle="modal" class="btn btn-primary btn-block"><i class=" icon-mail-2"></i> Send a message </a> 
-<a class="btn  btn-info btn-block"><i class=" icon-phone-1"></i> {{$product->company->phone_number[0]->number}}
+<a href="tel:{{$product->company->phone_number[0]->number}}" class="btn  btn-info btn-block"><i class=" icon-phone-1"></i> {{$product->company->phone_number[0]->number}} Call Now
 </a></div>
 </div>
 </div>

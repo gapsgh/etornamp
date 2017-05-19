@@ -15,7 +15,7 @@
 				<div class="row">
 					<div class="col-md-5 col-xs-4 col-xxs-12">
 						<h3 class="no-padding text-center-480 useradmin"><a href="">
-							<img class="userImg" src="{{$company_logo_path.$company_details['logo']}}" alt="user"> {{$company_details['name']}}
+							<img class="userImg" src="{{url($company_logo_path.$company_details['logo'])}}" alt="user"> {{$company_details['name']}}
 						</a></h3>
 					</div>
 					<div class="col-md-7 col-xs-8 col-xxs-12">
@@ -89,7 +89,7 @@
 										</div>
 										<div class="panel-collapse collapse in" id="collapseB1">
 											<div class="panel-body">
-												<form action="/companies/{{$company_details['id']}}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+												<form action="{{url(sprintf('companies/%d',$company_details['id']))}}" method="POST" class="form-horizontal" enctype="multipart/form-data">
 													<input name="_method" type="hidden" value="PUT">
 													{{ csrf_field() }}
 													<fieldset>
@@ -207,7 +207,7 @@
 										<div class="panel-collapse collapse" id="collapseB2">
 											<div class="panel-body">
 
-												<form  action="/companies/{{$company_details['id']}}" method="POST" class="form-horizontal" enctype="multipart/form-data" role="form">
+												<form  action="{{url(sprintf('companies/%d',$company_details['id']))}}" method="POST" class="form-horizontal" enctype="multipart/form-data" role="form">
 													<input name="_method" type="hidden" value="PUT">
 													{{ csrf_field() }}
 													<div class="form-group">
@@ -239,7 +239,7 @@
 										<div class="panel-collapse" id="collapseB3">
 											<div class="panel-body">
 
-												<form  action="/companies/{{$company_details['id']}}" method="POST" class="form-horizontal" enctype="multipart/form-data" role="form">
+												<form  action="{{url(sprintf('companies/%d',$company_details['id']))}}" method="POST" class="form-horizontal" enctype="multipart/form-data" role="form">
 													<input name="_method" type="hidden" value="PUT">
 													{{ csrf_field() }}
 													<div class="form-group">

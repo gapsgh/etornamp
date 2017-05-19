@@ -71,7 +71,7 @@
 	<div class="page-bottom-info-inner">
 		<div class="page-bottom-info-content text-center">
 			<h1>If you have any questions, comments or concerns, please call the PROMOTEGH.COM Advertising department </h1>
-			<a class="btn  btn-lg btn-primary-dark" href="tel:+000000000">
+			<a class="btn  btn-lg btn-primary-dark" href="tel:+233543414719">
 				<i class="icon-mobile"></i> <span class="hide-xs color50">Call Now:</span> (+233) 54-3414-719 </a>
 			</div>
 		</div>
@@ -79,8 +79,8 @@
 	<div class="footer" id="footer">
 		<div class="container">
 			<ul class=" pull-left navbar-link footer-nav">
-				<li><a href="index.html"> Home </a> <a href="about-us.html"> About us </a> <a href="#"> Terms and
-					Conditions </a> <a href="#"> Privacy Policy </a> <a href="contact.html"> Contact us </a> <a href="faq.html"> FAQ </a>
+				<li><a href="#"> Home </a> <a href="#"> About us </a> <a href="#"> Terms and
+					Conditions </a> <a href="#"> Privacy Policy </a> <a href="#"> Contact us </a> <a href="#"> FAQ </a>
 				</ul>
 				<ul class=" pull-right navbar-link footer-nav">
 					<li> &copy; 2017 PROMOTEGH.COM</li>

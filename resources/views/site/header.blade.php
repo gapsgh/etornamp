@@ -1,5 +1,5 @@
 <div class="header">
-	<nav class="navbar   navbar-site navbar-default" role="navigation" style="background-image: url(/images/hbg2.jpg);">
+	<nav class="navbar   navbar-site navbar-default" role="navigation" style="background-image: url({{url('/images/hbg2.jpg')}});">
 		<div class="container">
 			<div class="navbar-header">
 				<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">

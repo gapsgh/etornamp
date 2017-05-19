@@ -6,12 +6,34 @@
     display: block;
     max-height: 500px !important;
 }
+.top-makes{
+  background: none repeat scroll 0 0 #FFFFFF;
+  border-radius: 3px 3px;
+  padding:4px;
+  margin: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1);
+  max-width: 100%
+}
 .ads-image .bx-wrapper .bx-viewport {
     border: 0 none;
     box-shadow: none;
     left: 0;
     border-radius: 3px;
     background-color: #eeeeee !important;
+  }
+  
+.thumb-item-link {
+    border-bottom: 4px solid #ccc;
+    display: inline-block;
+    float: none;
+    height: 56px;
+    margin: 0 2px;
+    outline: medium none;
+    overflow: hidden;
+    position: relative;
+    width: 100px;
+}
 /*$grey: #cacaca;
 
 #page_container {

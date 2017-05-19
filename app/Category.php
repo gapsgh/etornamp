@@ -11,4 +11,9 @@ class Category extends Model
     	return $this->hasMany('App\Product');
     }
 
+    public function level2s()
+    {
+    	return $this->hasMany('App\Category','id','parent_id');
+    }
+
 }

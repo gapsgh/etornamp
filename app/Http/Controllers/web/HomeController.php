@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
 use App\Product;
+use App\Location;
 
 class HomeController extends Controller
 {
@@ -16,8 +17,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // dd(phpinfo());
         //
         $category_level_1 = Category::where('level',1)->get()->toArray();
+
+        $categories_forsale = Category::where('level',2)->get();
         
         $categories = [];
         foreach ($category_level_1  as $key => $category_1) {
@@ -30,6 +34,7 @@ class HomeController extends Controller
         // 
         $featured_products = Product::where('premiun_status','<>',0)
                                     ->where('active_status','1')
+                                    ->where('approval_status','1')
                                     ->with('image')
                                     ->with('category')
                                     ->with('rating')
@@ -37,8 +42,11 @@ class HomeController extends Controller
                                     ->limit(10)
                                     ->get()->toArray();
         // dd($featured_products);
-
-        return view('site.pages.home',compact('categories','featured_products'));
+        // 
+        $locations = Location::where('level',2)
+                                ->with('product')->limit(48)->get();
+        // dd($locations);
+        return view('site.pages.home',compact('categories','featured_products','locations','categories_forsale'));
     }
 
     public function allfeatured()

@@ -14,7 +14,7 @@
 					<h2 class="title-2 uppercase"><strong> <i class="icon-docs"></i> Edit Your Ghana Made Product/Service</strong></h2>
 					<div class="row">
 						<div class="col-sm-12">
-							<form action="/products/{{$product['id']}}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+							<form action="{{url(sprintf('products/%d',$product['id']))}}" method="POST" class="form-horizontal" enctype="multipart/form-data">
 							<input name="_method" type="hidden" value="PUT">
 								{{ csrf_field() }}
 								<fieldset>	
@@ -121,7 +121,7 @@
 											@if(count($product_images) > 0)
 												<div class="row">
 													<div class="col-md-5">
-														<img src="/uploads/product_images/{{$product_images[0]['image']}}" width="100%" style="padding: 10px;" />
+														<img src="{{url(sprintf('uploads/product_images/%s',$product_images[0]['image']))}}" width="100%" style="padding: 10px;" />
 													</div>
 
 													<div class="col-md-7">
@@ -145,7 +145,7 @@
 											@if(array_key_exists (1, $product_images) )
 												<div class="row">
 													<div class="col-md-5">
-														<img src="/uploads/product_images/{{$product_images[1]['image']}}" width="100%" style="padding: 10px;" />
+														<img src="{{url(sprintf('uploads/product_images/%s',$product_images[1]['image']))}}" width="100%" style="padding: 10px;" />
 													</div>
 
 													<div class="col-md-7">
@@ -166,7 +166,7 @@
 											@if(array_key_exists (2, $product_images) )
 												<div class="row">
 													<div class="col-md-5">
-														<img src="/uploads/product_images/{{$product_images[2]['image']}}" width="100%" style="padding: 10px;" />
+														<img src="{{url(sprintf('uploads/product_images/%s',$product_images[2]['image']))}}" width="100%" style="padding: 10px;" />
 													</div>
 
 													<div class="col-md-7">
@@ -187,7 +187,7 @@
 											@if(array_key_exists (3, $product_images) )
 												<div class="row">
 													<div class="col-md-5">
-														<img src="/uploads/product_images/{{$product_images[3]['image']}}" width="100%" style="padding: 10px;" />
+														<img src="{{url(sprintf('uploads/product_images/%s',$product_images[3]['image']))}}" width="100%" style="padding: 10px;" />
 													</div>
 
 													<div class="col-md-7">
@@ -326,6 +326,9 @@
 									</ul>
 								</div>
 							</div>
+						</div>
+						<div class="inner-box no-padding">
+							<img class="img-responsive" src="{{url('images/migcloth.png')}}" alt="">
 						</div>
 					</div>
 				</div>

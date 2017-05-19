@@ -9,11 +9,11 @@
 				}
 			?>
 			
-			<a href="/products/{{$product['id']}}/edit">
+			<a href="{{url(sprintf('products/%d/edit',$product['id']))}}">
 				<img class="thumbnail  img-responsive" 
 				src="<?php
 					if (isset($product['image'][0]['image'])) {
-						echo product_images_path().$product['image'][0]['image'];
+						echo url(product_images_path().$product['image'][0]['image']);
 					}else{
 						echo"";
 					}
@@ -25,7 +25,7 @@
 			<div>
 				<p>
 					<strong> 
-						<a href="/products/{{$product['id']}}/edit" title="Brend New Nexus 4">
+						<a href="{{url(sprintf('products/%d/edit',$product['id']))}}" title="Brend New Nexus 4">
 							{{$product['name']}}
 						</a> 
 					</strong>
@@ -64,13 +64,13 @@
 	<td style="width:10%" class="action-td">
 		<div>
 			<p>
-				<a href="/products/{{$product['id']}}/edit" class="btn btn-primary btn-xs"> 
+				<a href="{{url(sprintf('products/%d/edit',$product['id']))}}" class="btn btn-primary btn-xs"> 
 					<i class="fa fa-edit"></i> Edit 
 				</a>
 			</p>
 			
 			<p>
-				<form action="/products/{{$product['id']}}" method="POST" class="form-horizontal" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to delete -{{$product['name']}}- ?');">
+				<form action="{{url(sprintf('products/%d',$product['id']))}}" method="POST" class="form-horizontal" enctype="multipart/form-data" onsubmit="return confirm('Are you sure you want to delete -{{$product['name']}}- ?');">
 				<input name="_method" type="hidden" value="DELETE">
 					{{ csrf_field() }}
 					<button type="submit" class="btn btn-danger btn-xs" ><i class=" fa fa-trash"></i> Delete</button>

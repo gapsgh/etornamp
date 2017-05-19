@@ -7,29 +7,29 @@
 								@if($product->premiun_status == 1)
 
 									<div class="cornerRibbons urgentAds">
-										<a href="/product/{{$product->id}}/{{make_slug($product->name)}}"> Urgent</a>
+										<a href="{{url(sprintf('product/%d/%s',$product->id,make_slug($product->name)))}}"> Urgent</a>
 									</div>
 
 								@elseif($product->premiun_status == 2)
 
 									<div class="cornerRibbons topdAds">
-										<a href="/product/{{$product->id}}/{{make_slug($product->name)}}"> Top Ads</a>
+										<a href="{{url(sprintf('product/%d/%s',$product->id,make_slug($product->name)))}}"> Top Ads</a>
 									</div>
 
 								@elseif($product->premiun_status == 3)
 
 									<div class="cornerRibbons featuredAds">
-										<a href="/product/{{$product->id}}/{{make_slug($product->name)}}"> Featured Ads</a>
+										<a href="{{url(sprintf('product/%d/%s',$product->id,make_slug($product->name)))}}"> Featured Ads</a>
 									</div>
 
 								@endif
 								<div class="col-sm-2 no-padding photobox">
 									<div class="add-image">
 										<span class="photo-count"><i class="fa fa-camera"></i> {{count($product->image)}} </span>
-										<a href="/product/{{$product->id}}/{{make_slug($product->name)}}">
+										<a href="{{url(sprintf('product/%d/%s',$product->id,make_slug($product->name)))}}">
 											<img class="thumbnail no-margin" 
 												src="@if( count($product->image) > 0 )
-													{{product_images_path().$product->image[0]->image}}
+													{{url(product_images_path().$product->image[0]->image)}}
 													@endif" alt="img">
 										</a>
 									</div>
@@ -37,7 +37,7 @@
 								<div class="col-sm-7 add-desc-box">
 									<div class="add-details">
 										<h5 class="add-title">
-											<a href="/product/{{$product->id}}/{{make_slug($product->name)}}"> 
+											<a href="{{url(sprintf('product/%d/%s',$product->id,make_slug($product->name)))}}"> 
 												{{ $product->name }}
 											</a>
 										</h5>
