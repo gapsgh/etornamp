@@ -24,7 +24,7 @@
 				</div>
 				@foreach($sub_categories as $category_sub)
 					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-4 f-category">
-						<a href="{{url(sprintf('category/%d/%s',$category_sub['id'],make_slug($category_sub['name']) ) )}}"><img src="{{url(sprintf('uploads/category_images_thumb/%s',$category_sub['image']))}}" class="img-responsive" alt="img">
+						<a href="{{url(sprintf('category/%d/%s',$category_sub['id'],make_slug($category_sub['name']) ) )}}"><img src="{{cateory_images_path().$category_sub['image']}}" class="img-responsive" alt="img">
 							<h6> {{$category_sub['name']}} </h6></a>
 					</div>
 				@endforeach

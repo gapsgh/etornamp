@@ -100,11 +100,11 @@
 										<label class="col-md-3 control-label">Is Your Product Certified</label>
 										<div class="col-md-8">
 											<label class="radio-inline" for="radios-0">
-												<input <?php if($product['certification_status'] == 0){ echo 'checked'; } ?> name="certification_status" id="radios-0" value="1" type="radio">
+												<input <?php if($product['certification_status'] == 1){ echo 'checked'; } ?> name="certification_status" id="radios-0" value="1" type="radio">
 												Yes 
 											</label>
 											<label class="radio-inline" for="radios-1">
-												<input <?php if($product['certification_status'] == 1){ echo 'checked'; } ?> name="certification_status" id="radios-1" value="0" type="radio" >
+												<input <?php if($product['certification_status'] == 0){ echo 'checked'; } ?> name="certification_status" id="radios-1" value="0" type="radio" >
 												No
 											</label>
 											<span class="help-block">Check Yes if you have the Made In Ghana Logo</span>

@@ -50,5 +50,13 @@ class LoginController extends Controller
         $cred['user_type']  = 1;
         return $cred;
     }
-     
+     /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'phone_number';
+    }
 }

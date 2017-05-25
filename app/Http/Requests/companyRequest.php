@@ -26,7 +26,6 @@ class companyRequest extends FormRequest
         return [
             'name' => 'required',
             'number' => 'required',
-            'email' => 'required',
             'location_city' => 'required'
         ];
     }

@@ -28,13 +28,13 @@
 									<div class="form-group">
 										<label class="col-md-3 control-label">Registering As</label>
 										<div class="col-md-8">
-											<label class="radio-inline" for="radios-0">
-												<input name="account_type" id="radios-0" value="1" type="radio" checked="checked">
+											<label class="radio-inline btn btn-warning" for="radios-0">
+												<input style="margin: 4px 4px 0px -5px;" name="account_type" id="radios-0" value="1" type="radio" checked="checked">
 												<strong>A Seller </strong>
 											</label>
-											<label class="radio-inline" for="radios-1">
-												<input name="account_type" id="radios-1" value="2" type="radio">
-												<strong>A Make/Producer</strong>
+											<label class="radio-inline  btn btn-danger" for="radios-1">
+												<input style="margin: 4px 4px 0px -5px;" name="account_type" id="radios-1" value="2" type="radio">
+												<strong>A Manufacturers</strong>
 											</label>
 											<span class="help-block">Specify whether you produce the product or just sell them</span>
 										</div>
@@ -60,32 +60,10 @@
 									</div>
 
 
-
-									<div class="form-group ">
-										<label class="col-md-4 control-label">Registration Number</label>
-										<div class="col-md-6">
-											<input name="registration_number" placeholder="Company Registration Number" value="{{ old('registration_number') }}" class="form-control input-md" type="text">
-										</div>
-									</div>
-
-									<div class="form-group required">
-										<label class="col-md-4 control-label">Address</label>
-										<div class="col-md-6">
-											<input name="address" value="{{ old('address') }}" placeholder="Company Address" class="form-control input-md" type="text">
-										</div>
-									</div>
-
-									<div class="form-group required">
-										<label class="col-md-4 control-label">Working Hours</label>
-										<div class="col-md-6">
-											<input name="working_hours" value="{{ old('working_hours') }}" placeholder="Company Working Hours" class="form-control input-md" type="text">
-										</div>
-									</div>
-
 									<div class="form-group required">
 										<label class="col-md-4 control-label">Phone Number <sup>*</sup></label>
 										<div class="col-md-5">
-											<input name="number" value="{{ old('number') }}" placeholder="Phone Number" class="form-control input-md" type="text" required>
+											<input name="number" value="{{ $user['phone_number'] }}" placeholder="Phone Number" class="form-control input-md" type="text" required>
 										</div>
 										<div class="col-md-1">
 											<label class="checkbox-inline" for="on_whatsapp">
@@ -100,14 +78,6 @@
 										<label class="col-md-4 control-label" for="textarea">About Business</label>
 										<div class="col-md-6">
 											<textarea class="form-control" id="textarea" name="other_description" placeholder="A little About Your Business">{{ old('other_description') }}</textarea>
-										</div>
-									</div>
-									<div class="form-group required">
-										<label for="inputEmail3" class="col-md-4 control-label">Email
-											<sup>*</sup>
-										</label>
-										<div class="col-md-6">
-											<input type="email" value="{{ old('email') }}" name="email" class="form-control" id="inputEmail3" placeholder="Email" required>
 										</div>
 									</div>
 

@@ -4,7 +4,6 @@
 	Welcome to Promotegh.com
 @stop
 @section('content')
-
 <div class="main-container">
 <div class="container">
 <div class="row">
@@ -20,51 +19,69 @@
 </li>
 </ul>
 </div> --}}
- 
+
 <div class="locations-list  list-filter">
-<h5 class="list-title"><strong><a href="#">Location</a></strong></h5>
-<ul class="browse-list list-unstyled long-list">
-<li><a href="sub-category-sub-location.html"> Atlanta </a></li>
-<li><a href="sub-category-sub-location.html"> Wichita </a></li>
-<li><a href="sub-category-sub-location.html"> Anchorage </a></li>
-<li><a href="sub-category-sub-location.html"> Dallas </a></li>
-<li><a href="sub-category-sub-location.html">New York </a></li>
-<li><a href="sub-category-sub-location.html"> Santa Ana/Anaheim </a></li>
-<li><a href="sub-category-sub-location.html"> Miami </a></li>
-<li><a href="sub-category-sub-location.html"> Virginia Beach </a></li>
-<li><a href="sub-category-sub-location.html"> San Diego </a></li>
-<li><a href="sub-category-sub-location.html"> Boston </a></li>
-<li><a href="sub-category-sub-location.html"> Houston </a></li>
-<li><a href="sub-category-sub-location.html">Salt Lake City </a></li>
-<li><a href="sub-category-sub-location.html"> Other Locations </a></li>
-</ul>
+	<h5 class="list-title"><strong><a href="#"><i class="icon-money"></i> Price</a></strong></h5>
+	
+	<ul class="browse-list list-unstyled long-list">
+	<li><a @if($sprice_for_view == 'l2h') 
+				style="color: green; font-weight: bold;" 
+			@endif
+			href="{{request()->fullUrlWithQuery(["sprice"=>"l2h"])}}"> 
+			<i class="fa fa-sort-amount-asc" aria-hidden="true"></i> Lowest to Highest
+		</a>
+	</li>
+	<li><a @if($sprice_for_view == 'h2l') 
+				style="color: green; font-weight: bold;" 
+			@endif
+			href="{{request()->fullUrlWithQuery(["sprice"=>"h2l"])}}"> 
+			<i class="fa fa-sort-amount-desc" aria-hidden="true"></i> Highest to Lowest
+		</a>
+	</li>
+	
+	</ul>
 </div>
- 
+
 <div class="locations-list  list-filter">
-<h5 class="list-title"><strong><a href="#">Price range</a></strong></h5>
-<form role="form" class="form-inline ">
-<div class="form-group col-sm-4 no-padding">
-<input type="text" placeholder="$ 2000 " id="minPrice" class="form-control">
+	<h5 class="list-title"><strong><a href="#"><i class=" icon-location-2"></i> Locations</a></strong></h5>
+	
+	<ul class="browse-list list-unstyled long-list">
+	<li><a @if($location_id_for_view == '') 
+				style="color: green; font-weight: bold;" 
+			@endif
+			href="{{url( Request::path() )}}"> 
+			<strong>All Locations ({{$all_location_products_count}})</strong>
+		</a>
+	</li>
+	@foreach($locations as $location)
+	<li ><a @if($location_id_for_view == $location->id) 
+				style="color: green; font-weight: bold;" 
+			@endif
+			href="{{url(Request::path(). '?lid='.$location->id.
+										'&lname='.make_slug($location->name) )}}"> 
+			{{$location->name}} ({{$location->product->count()}})
+		</a>
+	</li>
+	@endforeach
+	</ul>
 </div>
-<div class="form-group col-sm-1 no-padding text-center hidden-xs"> -</div>
-<div class="form-group col-sm-4 no-padding">
-<input type="text" placeholder="$ 3000 " id="maxPrice" class="form-control">
-</div>
-<div class="form-group col-sm-3 no-padding">
-<button class="btn btn-default pull-right btn-block-xs" type="submit">GO
-</button>
-</div>
-</form>
-<div style="clear:both"></div>
-</div>
- 
+
+
+
 <div class="locations-list  list-filter">
-<h5 class="list-title"><strong><a href="#">Seller</a></strong></h5>
-<ul class="browse-list list-unstyled long-list">
-<li><a href="sub-category-sub-location.html"><strong>All Ads</strong> <span class="count">228,705</span></a></li>
-<li><a href="sub-category-sub-location.html">Business <span class="count">28,705</span></a></li>
-<li><a href="sub-category-sub-location.html">Personal <span class="count">18,705</span></a></li>
-</ul>
+	<h5 class="list-title"><strong><a href="#"><i class="fa fa-users" aria-hidden="true"></i> Sellers </a></strong></h5>
+	<ul class="browse-list list-unstyled long-list">
+		@foreach($sellers as $seller)
+			<li><a @if($seller_id_for_view == $seller->id) 
+						style="color: green; font-weight: bold;" 
+					@endif
+					href="{{url(Request::path(). '?sid='.$seller->id.
+										'&sname='.make_slug($seller->name) )}}"> {{$seller->name}} 
+					<span class="count">{{$seller->product->count()}}</span>
+				</a>
+			</li>
+		@endforeach
+	</ul>
 </div>
  
 {{-- <div class="locations-list  list-filter">
@@ -96,13 +113,13 @@
 							</a>
 						</li>
 					</ul>
-<div class="tab-filter">
+{{-- <div class="tab-filter">
 <select class="selectpicker" data-style="btn-select" data-width="auto">
 <option>Short by</option>
 <option>Price: Low to High</option>
 <option>Price: High to Low</option>
 </select>
-</div>
+</div> --}}
 					</div>
 
 					<div class="listing-filter">
@@ -112,10 +129,26 @@
 							</div>
 							</div>
 							<div class="pull-right col-xs-6 text-right listing-view-action">
-								<span class="list-view active"><i class="  icon-th"></i></span> 
-								<span class="compact-view"><i class=" icon-th-list  "></i></span> 
-								<span class="grid-view "><i class=" icon-th-large "></i></span>
-								<span class="gallery-view "><i class="fa fa-picture-o fa-2x" aria-hidden="true"></i></span>
+								<a href="{{request()->fullUrlWithQuery(["veiw"=>"list"])}}">
+									<span @if($veiw_style == 'list')
+												class="active"
+											@endif><i class="  icon-th"></i></span> 
+								</a>
+								<a href="{{request()->fullUrlWithQuery(["veiw"=>"grid"])}}">
+									<span @if($veiw_style == 'grid')
+												class="active"
+											@endif><i class=" icon-th-large "></i></span>
+								</a>
+								<a href="{{request()->fullUrlWithQuery(["veiw"=>"compact"])}}">
+									<span @if($veiw_style == 'compact')
+												class="active"
+											@endif><i class=" icon-th-list  "></i></span> 
+									</a>
+								<a href="{{request()->fullUrlWithQuery(["veiw"=>"gallery"])}}">
+									<span @if($veiw_style == 'gallery')
+												class="active"
+											@endif><i class="fa fa-picture-o fa-2x" aria-hidden="true"></i></span>
+								</a>
 							</div>
 							<div style="clear:both"></div>
 						</div>
@@ -144,13 +177,19 @@ by </a>
 <div class="menu-overly-mask"></div>
 
 
-					
-
-@if(isset($_GET['view']) and $_GET['view'] == 'list')
+@if($veiw_style == 'list')
 @include('site.pages.filter.list_view')
-@elseif(isset($_GET['view']) and $_GET['view'] == 'gallery')
+@endif
+
+@if($veiw_style == 'gallery')
 @include('site.pages.filter.gallery_view')
-@else
+@endif
+
+@if($veiw_style == 'compact')
+@include('site.pages.filter.list_view')
+@endif
+
+@if($veiw_style == 'grid')
 @include('site.pages.filter.list_view')
 @endif
 
@@ -165,7 +204,7 @@ by </a>
 
 
 <div class="pagination-bar text-center">
-{!! $products->links() !!}
+{!! $products->appends($params)->links() !!}
 </div>
  
 @include('site.pages.ask_block')

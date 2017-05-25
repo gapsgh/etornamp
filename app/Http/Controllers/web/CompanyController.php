@@ -9,6 +9,7 @@ use App\Email;
 use App\PhoneNumber;
 use App\MapLocation;
 use App\Location;
+use App\User;
 
 use App\Http\Requests\companyRequest;
 
@@ -37,6 +38,12 @@ class CompanyController extends Controller
     {
         if(\Auth::check()) {
             $user_id = \Auth::user()->id;
+
+            $user = User::where('id',$user_id)->get()->toArray();
+            if(!empty($user)){
+                $user = $user[0];
+            }
+            // dd($user);
             $company = Company::where('user_id',$user_id)->get()->toArray();
 
             $locations_raw = Location::where('level',1)->get()->toArray();
@@ -51,7 +58,7 @@ class CompanyController extends Controller
             if(!empty($company)){
                 return redirect('account/dashboard')->with('warning_message', 'User Can Only Create One Company Account');
             }else{
-                return view('site.admin.companies.create',compact('locations'));
+                return view('site.admin.companies.create',compact('locations','user'));
             }
         }else{
             return redirect('/login');
@@ -81,13 +88,16 @@ class CompanyController extends Controller
 
         // Add Company Logo
         $logo = $request->file('logo');
+        if(!empty($logo)){
         // $filename = $logo->getClientOriginalName();
         $filename = date_timestamp_get(date_create()).'.' . $logo->getClientOriginalExtension();
         $destination_path = base_path() . '/public/uploads/logos/';
         $logo->move($destination_path, $filename);
 
         $fields['logo'] = $filename;
-
+    }else{
+        $fields['logo'] = 'company.png';
+    }
         // dd($fields);
         //Ceate the company 
         $company = Company::create($fields);
@@ -98,8 +108,13 @@ class CompanyController extends Controller
         }
 
         //save the company email and phone numbers
-        Email::create($fields);
-        PhoneNumber::create($fields);
+        if(!empty($fields['email'])){
+            Email::create($fields);
+        }
+        if(!empty($fields['number'])){
+            PhoneNumber::create($fields);
+        }
+        
         MapLocation::create($fields);
 
 
@@ -152,7 +167,8 @@ class CompanyController extends Controller
             $fields['user_id'] = $user_id;
         }
 
-        if(!empty($request->file())){
+        if(!empty($request->file()) ){
+            
              // Add Company Logo
             $logo = $request->file('logo');
             // $filename = $logo->getClientOriginalName();
@@ -165,6 +181,11 @@ class CompanyController extends Controller
 
             return redirect('account/dashboard')->with('success_message', 'Company Logo Updated'); 
         }
+        if(empty($request->file()) and !empty($fields['update_logo']) ){
+            return redirect('account/dashboard')->with('success_message', 'No Logo Uploaded');
+        }
+
+
         // dd($fields);
         if(!empty($fields['lat'])){ //this will tell us that the map settings is what the user wants to update
             //save the company email and phone numbers

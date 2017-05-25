@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // dd(phpinfo());
+        // dd();
         //
         $category_level_1 = Category::where('level',1)->get()->toArray();
 
@@ -45,8 +45,11 @@ class HomeController extends Controller
         // 
         $locations = Location::where('level',2)
                                 ->with('product')->limit(48)->get();
-        // dd($locations);
-        return view('site.pages.home',compact('categories','featured_products','locations','categories_forsale'));
+        
+        //All Locatioins for search
+        $locations_all = json_encode(Location::select('id','name')->where('level',2)->get()->toJson());
+        // dd(json_encode($locations_all));
+        return view('site.pages.home',compact('categories','featured_products','locations','categories_forsale','locations_all'));
     }
 
     public function allfeatured()

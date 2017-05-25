@@ -56,7 +56,7 @@ class SiteAdminController extends Controller
             }
 
             if(count($company_details['location']) >0){
-                $company_details['location'] = $company_details['location'][0];
+                $company_details['location'] = $company_details['location'];
             }else{
                 $company_details['location'] = ['lat'=>5.6037168,'lng'=>-0.1869644];
             }

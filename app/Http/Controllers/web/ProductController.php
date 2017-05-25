@@ -49,12 +49,12 @@ class ProductController extends Controller
                                 ->with('location_city')
                                 ->get()->toArray();
 
-        $company_details = $company_details_data[0];
-
         if(empty($company_details_data)){
             //send the ueser to the create Company page
              return redirect('companies/create')->with('info_message','You have to create a business profile to start listing!!');
         }
+        
+        $company_details = $company_details_data[0];
 
         $category_level_1 = Category::where('level',1)->get()->toArray();
         
@@ -223,36 +223,37 @@ class ProductController extends Controller
          if($new_image_size < 2000000){
             //Save the image with a 80% compression
             $new_image->save($destination_actua_path.$filename,80);
-            $large_image->resize(816, null , function($ratio){$ratio->aspectRatio();})->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,80);
+            $large_image->resize(816, null , function($ratio){$ratio->aspectRatio();})->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,90);
          }
          if(2000000 <= $new_image_size and $new_image_size <= 4000000){
             //Save the image with a 60% compression
             $new_image->save($destination_actua_path.$filename,50);
-            $large_image->resize(816, null , function($ratio){$ratio->aspectRatio();})->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,55);
+            $large_image->resize(816, null , function($ratio){$ratio->aspectRatio();})->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,70);
 
          }
          if(4000001 <= $new_image_size and $new_image_size <= 5000000){
             //Save the image with a 65% compression
             $new_image->save($destination_actua_path.$filename,35);
-            $large_image->resize(816, null , function($ratio){$ratio->aspectRatio();})->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,40);
+            $large_image->resize(816, null , function($ratio){$ratio->aspectRatio();})->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,65);
          }
          if(5000001 <= $new_image_size and $new_image_size <= 6000000){
             //Save the image with a 60% compression
             $new_image->save($destination_actua_path.$filename,30);
-            $large_image->resize(816, null , function($ratio){$ratio->aspectRatio();})->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,35);
+            $large_image->resize(816, null , function($ratio){$ratio->aspectRatio();})->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,55);
          }
          if(6000001 <= $new_image_size){
             //Save the image with a 50% compression
             $new_image->save($destination_actua_path.$filename,20);
-            $large_image->resize(816, null , function($ratio){$ratio->aspectRatio();})->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,30);
+            $large_image->resize(816, null , function($ratio){$ratio->aspectRatio();})->insert($watermark_path, 'bottom-right', 10, 10)->save($destination_actua_path_large.$filename,40);
          }
 
-        $new_image->fit(200)->save($thumbnail_path.$filename);
+        $new_image->fit(400)->save($thumbnail_path.$filename);
 
         return $filename;
 
         }
 
+    //generate random unique code for product
     public function getProductCode(){
         do{
             $rand = generateRandomString(8);
@@ -272,14 +273,17 @@ class ProductController extends Controller
         $product = Product::where('id',$id)
                             ->with('image')
                             ->with('category')
-                            ->with('company.email','company.phone_number','company.company_location_city','company.company_account_type')
+                            ->with('company.email','company.location','company.phone_number','company.company_location_city','company.company_account_type')
                             ->with('rating')
+                            ->with('visitors')
                             ->with('visitors')
                             ->with('producr_location_city')
                             ->first();
         //Add one visitor
          $product_visitor =[ 'product_id' => $id];
             ProductVisitors::create($product_visitor);
+
+        
 
         return view('site.pages.details_page',compact('id','product'));
     }
@@ -342,7 +346,7 @@ class ProductController extends Controller
     {
          //Get all the request field data
         $fields = $request->all();
-        
+        // dd($fields);
         $product_id = $id;
 
         $product_details = Product::find($id)->toArray();

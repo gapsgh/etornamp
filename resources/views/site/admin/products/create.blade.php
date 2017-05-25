@@ -232,6 +232,9 @@
 								Post your free online GM ads with us. Our duty is to make sure that your add gets to the maximum number of people in ghana and beyond
 							</p>
 						</div>
+						<div class="inner-box no-padding">
+							<img class="img-responsive" src="{{url('images/migcloth.png')}}" alt="">
+						</div>
 						<div class="panel sidebar-panel">
 							<div class="panel-heading uppercase">
 								<small>

@@ -8,7 +8,7 @@ class Location extends Model
 {
     //
     public function product(){
-    	return $this->hasMany('App\Product','id','location_city');
+    	return $this->hasMany('App\Product','location_city','id');
     }
 
     public function company(){

@@ -17,6 +17,7 @@ class CreatePhoneNumbersTable extends Migration
             $table->increments('id');
             $table->string('number');
             $table->integer('priority')->default('0');
+            $table->integer('on_whatsapp')->default('0');
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();

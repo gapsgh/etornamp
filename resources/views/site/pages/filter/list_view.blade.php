@@ -1,8 +1,7 @@
 <div class="adds-wrapper">
 
 						@foreach($products as $product)
-
-							<div class="item-list">
+							<div class="item-list make-{{$veiw_style}}">
 
 								@if($product->premiun_status == 1)
 
@@ -31,6 +30,7 @@
 												src="@if( count($product->image) > 0 )
 													{{url(product_images_path().$product->image[0]->image)}}
 													@endif" alt="img">
+											
 										</a>
 									</div>
 								</div>
@@ -54,9 +54,26 @@
 									</div>
 
 									<div class="col-sm-3 text-right  price-box">
-										<h2 class="item-price"> {{currency_code()}} {{ $product->single_price }} </h2>
+										
+										@if(!empty($product->bonus_percentage_single))
+											<h2 class="item-price"> {{currency_code()}} {{ $product->single_price }} 
+												<small><span style="color: green"> - {{$product->bonus_percentage_single}} %Off</span></small>
+											</h2>
+											<h4 class="item-price"><span style="color: red">{{currency_code()}}{{get_new_price($product->single_price,$product->bonus_percentage_single)}}</span></h4>
+										@else
+											<h2 class="item-price"> {{currency_code()}} {{ $product->single_price }} 
+											</h2>
+											<h4 class="item-price">&nbsp;</h4>
+										@endif
+										
+										@if(!empty($product->certification_status))
+											<a class="btn btn-primary  btn-sm make-favorite"> 
+												<i class="fa fa-certificate"></i> 
+											</a> 
+										@endif
+
+										@if(!empty($product->premiun_status))
 										<a class="btn btn-danger  btn-sm make-favorite"> 
-											<i class="fa fa-certificate"></i> 
 											<span>
 												@if($product->premiun_status == 1)
 													{{"Urgent"}}
@@ -66,7 +83,10 @@
 													{{"Featured Ads"}}
 												@endif
 											</span> 
-										</a> 
+										</a>
+										@endif 
+
+
 									</div>
 								</div>
 						@endforeach

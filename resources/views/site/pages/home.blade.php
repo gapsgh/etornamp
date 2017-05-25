@@ -14,19 +14,23 @@
 			<p class="sub animateme fittext3 animated fadeIn">
 				 Find locally produced products and services around you in Minutes
 			</p>
+				<form action="{{url('/search')}}" method="GET" class="form-horizontal">
+				{{ csrf_field() }}
 				<div class="row search-row animated fadeInUp">
+
 					<div class="col-lg-4 col-sm-4 search-col relative locationicon">
 						<i class="icon-location-2 icon-append"></i>
-						<input type="text" name="country" id="autocomplete-ajax" class="form-control locinput input-rel searchtag-input has-icon" placeholder="City/Zipcode..." value="">
+						<input type="text" name="locati" id="autocomplete-ajax" class="form-control locinput input-rel searchtag-input has-icon" placeholder="City" value="">
 					</div>
 					<div class="col-lg-4 col-sm-4 search-col relative">
 						<i class="icon-docs icon-append"></i>
-						<input type="text" name="ads" class="form-control has-icon" placeholder="I'm looking for a ..." value="">
+						<input type="text" name="find" class="form-control has-icon" placeholder="I'm looking for a ..." value="">
 					</div>
 					<div class="col-lg-4 col-sm-4 search-col">
-						<button class="btn btn-primary btn-search btn-block"><i class="icon-search"></i><strong>Find</strong></button>
+						<button class="btn btn-primary btn-search btn-block" type="submit"><i class="icon-search"></i><strong>Find</strong></button>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -44,7 +48,7 @@
 				</div>
 				@foreach($categories as $category)
 					<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 f-category">
-						<a href="{{url(sprintf("categories/%d/%s", $category['id'], make_slug($category['name']) ) ) }}"><img src="{{url(sprintf("/uploads/category_images_thumb/%s",$category['image']) )}}" class="img-responsive" alt="img">
+						<a href="{{url(sprintf("categories/%d/%s", $category['id'], make_slug($category['name']) ) ) }}"><img src="{{cateory_images_path().$category['image']}}" class="img-responsive" alt="img">
 							<h6> {{$category['name']}} </h6></a>
 					</div>
 				@endforeach
@@ -71,7 +75,7 @@
 				<div class="no-margin featured-list-slider ">
 				@foreach($featured_products as $f_product)
 					<div class="item">
-						<a href="ads-details-automobile.html">
+						<a href="{{url(sprintf('product/%d/%s',$f_product['id'],make_slug($f_product['name'])))}}">
 							<span class="item-carousel-thumb">
 
 								<img class="img-responsive" 
@@ -115,7 +119,7 @@
 										@if($loc_count == 0)
 											<ul class="cat-list col-sm-3  col-xs-6 col-xxs-12">
 										@endif
-											<li><a href="#">{{$location->name}} ({{count($location->product)}})</a></li>
+											<li><a href="#">{{$location->name}} ({{$location->product->count()}})</a></li>
 										<?php $loc_count++; ?>
 										@if($loc_count == 12)
 											</ul>
@@ -271,7 +275,7 @@
 		<aside>
 			<div class="inner-box no-padding">
 				<div class="inner-box-content">
-					<a href="#"><img class="img-responsive" src="images/site/app.jpg" alt="tv"></a>
+					<a href="#"><img class="img-responsive" src="images/site/app1.jpg" alt="tv"></a>
 				</div>
 			</div>
 			<div class="inner-box no-padding">
@@ -298,7 +302,7 @@
 					</div>
 				</div>
 				<div class="inner-box no-padding">
-					<img class="img-responsive" src="images/add2.jpg" alt="">
+					<img class="img-responsive" src="images/site/app.jpg" alt="">
 				</div>
 
 			</aside>
@@ -306,4 +310,21 @@
 	</div>
 	</div>
 </div>
+@stop
+@section('scripts')
+<script type="text/javascript">
+	var locations = JSON.parse(<?php echo $locations_all; ?>);
+	console.log(locations);
+</script>
+<?php 
+		if(session('success_message')){
+			?>
+			<script type="text/javascript">
+				setTimeout(function() {
+	            	Materialize.toast('<span>{{ session('success_message') }}</span>', 5000, 'btn-success');
+	        	}, 1000);
+			</script>
+			<?php
+		}
+	?>
 @stop

@@ -8,11 +8,11 @@
 <div class="container">
 <ol class="breadcrumb pull-left">
 <li><a href="#"><i class="icon-home fa"></i></a></li>
-<li><a href="#">All Ads</a></li>
-<li><a href="#">Electronics</a></li>
-<li class="active">Mobile Phones</li>
+<li><a href="#">All GMs</a></li>
+<li><a href="#">Fashion</a></li>
+<li class="active">Bags</li>
 </ol>
-<div class="pull-right backtolist"><a href="sub-category-sub-location.html"> <i class="fa fa-angle-double-left"></i> Back to Results</a></div>
+<div class="pull-right backtolist"><a href="s#"> <i class="fa fa-angle-double-left"></i> Back to Results</a></div>
 </div>
 <div class="container">
 <div class="row">
@@ -40,7 +40,7 @@
 <div id="bx-pager">
 @if( count($product->image) > 0 )
 	@foreach($product->image as $key => $image)
-		<a class="thumb-item-link" data-slide-index="{{$key}}" href=""><img src="{{url(product_images_large_path().$image->image)}}" alt="img"/></a>
+		<a class="thumb-item-link" data-slide-index="{{$key}}" href=""><img src="{{url(product_images_thumb_path().$image->image)}}" alt="img"/></a>
 	@endforeach
 @endif
 </div>
@@ -120,6 +120,25 @@
 </div>
 </div>
 <div class="panel sidebar-panel">
+<div class="panel-heading">Seller Map Location</div>
+<div class="panel-content">
+<div class="panel-body text-left">
+	<a target="blank" href="https://maps.google.com/maps?q={{$product->company->location->lat}}%2C{{$product->company->location->lng}}&z=17&hl=en">
+
+		<img class="hidden-sm hidden-xs" id="map_img" style="width: 100%; height: 200px;" src="{{url('images/loading_map.gif')}}" />
+		<img class="hidden-lg hidden-md " id="map_img_md" style="width: 100%; height: 200px;" src="{{url('images/loading_map.gif')}}" />
+  	
+  	</a>
+
+  	<a class="btn btn-block btn-primary" target="blank" href="https://maps.google.com/maps?q={{$product->company->location->lat}}%2C{{$product->company->location->lng}}&z=17&hl=en"">Get Direction</a>
+  	<br/>
+  	<h4 class="list-title">Have Uber App?</h4>
+  	<a class="btn btn-block" href="geo:{{$product->company->location->lat}},{{$product->company->location->lng}}?z=17"><strong>Request A Drive</strong></a>
+</div>
+</div>
+</div>
+
+ <div class="panel sidebar-panel">
 <div class="panel-heading">Safety Tips for Buyers</div>
 <div class="panel-content">
 <div class="panel-body text-left">
@@ -231,5 +250,15 @@ valid. </p>
     });
 
 
+function swap() {
+        document.getElementById('map_img').src = "https://maps.googleapis.com/maps/api/staticmap?center={{$product->company->location->lat}},{{$product->company->location->lng}}&size=200x200&maptype=roadmap&markers=color:green%7Clabel:L%7C{{$product->company->location->lat}},{{$product->company->location->lng}}&key=AIzaSyAX8XJtyjRrRbU1dccKfPBqPKIocplN4o4&zoom=15";
+    
+    document.getElementById('map_img_md').src = "https://maps.googleapis.com/maps/api/staticmap?center={{$product->company->location->lat}},{{$product->company->location->lng}}&size=400x300&maptype=roadmap&markers=color:green%7Clabel:L%7C{{$product->company->location->lat}},{{$product->company->location->lng}}&key=AIzaSyAX8XJtyjRrRbU1dccKfPBqPKIocplN4o4&zoom=15";
+    
+    }
+    swap();
+    
+
+    // "http://maps.google.com/staticmap?center=37.687,-122.407&zoom=8&size=450x300&maptype=terrain&key=AIzaSyDqAYaryKJixJsWu8L4gTcRdqTylIA-hzg&libraries&sensor=false"
 </script>
 @stop

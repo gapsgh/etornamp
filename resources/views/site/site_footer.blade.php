@@ -79,7 +79,7 @@
 	<div class="footer" id="footer">
 		<div class="container">
 			<ul class=" pull-left navbar-link footer-nav">
-				<li><a href="#"> Home </a> <a href="#"> About us </a> <a href="#"> Terms and
+				<li><a href="#"> Home </a> <a href="{{url('/about-us')}}"> About us </a> <a href="#"> Terms and
 					Conditions </a> <a href="#"> Privacy Policy </a> <a href="#"> Contact us </a> <a href="#"> FAQ </a>
 				</ul>
 				<ul class=" pull-right navbar-link footer-nav">

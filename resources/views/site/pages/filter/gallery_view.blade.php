@@ -16,7 +16,7 @@
 	        	data-src="@if( count($product->image) > 0 )
 							{{url(product_images_large_path().$product->image[0]->image)}}
 							@endif" 
-	        	data-sub-html="<h4>{{ $product->name }}</h4><a href='#'>View Details</p>">
+	        	data-sub-html="<h4>{{ $product->name }}</h4><a class='btn btn-primary' href='{{url(sprintf('product/%d/%s',$product->id,make_slug($product->name)))}}'>View Details</p>">
 	            <a href="">
 	                <img class="img-responsive" style="    display: block;
     padding: 4px;

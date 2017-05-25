@@ -30,7 +30,7 @@ class Company extends Model
 
 
     public function location(){
-    	return $this->hasMany('App\MapLocation');
+    	return $this->hasOne('App\MapLocation');
     }
 
     public function company_location_city(){

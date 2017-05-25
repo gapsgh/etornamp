@@ -32,7 +32,7 @@ class Product extends Model
         return $this->belongsTo('App\Category');
     }
 
-     public function producr_location_city(){
+    public function producr_location_city(){
     	return $this->hasOne('App\Location','id','location_city');
     }
 
