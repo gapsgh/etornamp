@@ -1,4 +1,5 @@
 <?php 
+use App\Location;
 
 function currency_code(){
 	return "‎GH₵";
@@ -51,5 +52,18 @@ function generateRandomString($length) {
 	return $randomString;
 }
 
+
+function getLocations()
+    {
+        //Collect the lacations
+        $locations_raw = Location::where('level',1)->get()->toArray();
+        $locations = [];
+        foreach ($locations_raw as $key => $location) {
+            $sub_locations = Location::where('level',2)->where('parent_id',$location['id'])->get()->toArray();
+            $location['sub_locations'] = $sub_locations;
+            $locations[] = $location;
+        }
+        return $locations;
+    }
 
 ?>

@@ -15,12 +15,14 @@
 				 Find locally produced products and services around you in Minutes
 			</p>
 				<form action="{{url('/search')}}" method="GET" class="form-horizontal">
-				{{ csrf_field() }}
 				<div class="row search-row animated fadeInUp">
 
 					<div class="col-lg-4 col-sm-4 search-col relative locationicon">
 						<i class="icon-location-2 icon-append"></i>
-						<input type="text" name="locati" id="autocomplete-ajax" class="form-control locinput input-rel searchtag-input has-icon" placeholder="City" value="">
+						<input type="text" style=" background-color: #fff; cursor: pointer;" 
+							onfocus="$('#changeLocation').modal('show');" 
+							name="location" id="company_location" class="form-control locinput input-rel searchtag-input has-icon" placeholder="City" value="" readonly="">
+							<input type="hidden" name="city" id="location_city" value="">
 					</div>
 					<div class="col-lg-4 col-sm-4 search-col relative">
 						<i class="icon-docs icon-append"></i>
@@ -43,7 +45,7 @@
 			<div class="row row-featured row-featured-category">
 				<div class="col-lg-12  box-title no-border">
 					<div class="inner"><h2><span>Browse by</span>
-						Category <a href="/all-categories" class="sell-your-item"> View more <i class="  icon-th-list"></i> </a></h2>
+						Category <a href="#" class="sell-your-item"> View more <i class="  icon-th-list"></i> </a></h2>
 					</div>
 				</div>
 				@foreach($categories as $category)
@@ -115,11 +117,11 @@
 							<div class="col-lg-12 tab-inner">
 								<div class="row">
 								<?php $loc_count = 0;?>
-									@foreach($locations as $location)
+									@foreach($locations_l2s as $location)
 										@if($loc_count == 0)
 											<ul class="cat-list col-sm-3  col-xs-6 col-xxs-12">
 										@endif
-											<li><a href="#">{{$location->name}} ({{$location->product->count()}})</a></li>
+											<li><a href="{{url(sprintf('/search?city=%d&location=%s',$location->id,$location->name))}}">{{$location->name}} ({{$location->product->count()}})</a></li>
 										<?php $loc_count++; ?>
 										@if($loc_count == 12)
 											</ul>
@@ -309,12 +311,19 @@
 		</div>
 	</div>
 	</div>
+	@include('site.location_modal')
 </div>
 @stop
 @section('scripts')
 <script type="text/javascript">
+	var cities = {};
 	var locations = JSON.parse(<?php echo $locations_all; ?>);
-	console.log(locations);
+
+	$.each(locations, function( index, value ) {
+		//populate the cities object for autocomplete
+		cities[value.id] = value.name;
+	});
+
 </script>
 <?php 
 		if(session('success_message')){
@@ -327,4 +336,5 @@
 			<?php
 		}
 	?>
+<script type="text/javascript" src="{{asset('/assets/plugins/autocomplete/ghana_cities_autocomplete.js')}}"></script>
 @stop

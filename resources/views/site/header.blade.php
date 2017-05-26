@@ -20,9 +20,7 @@
 						@else
 
 							<li>
-								<a href="{{ route('logout') }}"
-									onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+								<a href="#" id="SubmitLink">
 									Signout <i class="glyphicon glyphicon-off"></i> 
 								</a>
 								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

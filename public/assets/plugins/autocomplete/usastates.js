@@ -1,1 +1,1 @@
-﻿var usastates=[{"AL":"Alabama","AK":"Alaska"}]
+﻿var usastates={"AL":"Alabama","AK":"Alaska"}

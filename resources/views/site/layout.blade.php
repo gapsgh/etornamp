@@ -58,7 +58,7 @@
 	<script type="text/javascript" src="{{asset('/assets/plugins/autocomplete/jquery.mockjax.js')}}"></script>
 	<script type="text/javascript" src="{{asset('/assets/plugins/autocomplete/jquery.autocomplete.js')}}"></script>
 	<script type="text/javascript" src="{{asset('/assets/plugins/autocomplete/usastates.js')}}"></script>
-	<script type="text/javascript" src="{{asset('/assets/plugins/autocomplete/autocomplete-demo.js')}}"></script>
+	
 	<script src="{{asset('/assets/js/fileinput.min.js')}}" type="text/javascript"></script>
 	
     <script type="text/javascript" src="{{asset('/assets/js/materialize.min.js')}}"></script>
@@ -71,7 +71,7 @@
 	<script src="{{asset('/assets/js/hideMaxListItem.js')}}"></script>
 	 
 	<script src="{{asset('/assets/plugins/bxslider/jquery.bxslider.min.js')}}"></script>
-
+	<script src="{{ asset('js/my.js') }}"></script>
 	<script type="text/javascript">
 		function initialize_image_input(input_id) {
         $("#"+input_id).fileinput({
@@ -87,7 +87,11 @@
 	</script>
 	<script type="text/javascript">
 
-(function(){
+$('#changeLocation').on('shown.bs.modal', function() {
+  $('#accordion_search_bar').focus();
+})
+
+$( document ).ready(function() {
 //function for finding :contains case insensitive
 jQuery.expr[':'].icontains = function(a, i, m) {
 return jQuery(a).text().toUpperCase()
@@ -138,7 +142,9 @@ var searchTerm, panelContainerId,contained_elements;
 	    
 });
 
-}());
+});
+
+
 
     // Toast Notification
  /*   $(window).load(function() {
@@ -154,44 +160,7 @@ var searchTerm, panelContainerId,contained_elements;
     });*/
     
 
-    function create_map(pos) {
-   
-	var map = new google.maps.Map(document.getElementById('map-canvas'),{
-		center:pos,
-		zoom:15
-	});
-	
-	var marker = new google.maps.Marker({
-		position:pos,
-		map:map,
-		draggable:true
-	});
-	$('#lat').val(pos.lat);
-	$('#lng').val(pos.lng);
-
-	var searchBox = new google.maps.places.SearchBox(document.getElementById('searchmap'));
-
-	google.maps.event.addListener(searchBox,'places_changed',function(){
-		var places = searchBox.getPlaces();
-		var bounds = new google.maps.LatLngBounds();
-		var i, place;
-		for ( i=0; place=places[i]; i++) {
-			bounds.extend(place.geometry.location);
-			marker.setPosition(place.geometry.location); //set marker position to new location
-		}
-		map.fitBounds(bounds);
-		map.setZoom(15);
-	});
-
-	google.maps.event.addListener(marker,'position_changed',function(){
-		var lat = marker.getPosition().lat();
-		var lng = marker.getPosition().lng(); 
-		$('#lat').val(lat);
-		$('#lng').val(lng);
-
-	});
-
-	 }
+    
 
     </script>
 	@yield('scripts')

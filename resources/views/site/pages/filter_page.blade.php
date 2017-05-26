@@ -57,8 +57,8 @@
 	<li ><a @if($location_id_for_view == $location->id) 
 				style="color: green; font-weight: bold;" 
 			@endif
-			href="{{url(Request::path(). '?lid='.$location->id.
-										'&lname='.make_slug($location->name) )}}"> 
+			href="{{url(Request::path(). '?city='.$location->id.
+										'&location='.make_slug($location->name) )}}"> 
 			{{$location->name}} ({{$location->product->count()}})
 		</a>
 	</li>
@@ -163,12 +163,22 @@ Filters
 </li>
 <li>
 <div class="dropdown">
-<a data-toggle="dropdown" class="dropdown-toggle"><i class="caret "></i> Short
-by </a>
+<a data-toggle="dropdown" class="dropdown-toggle"><i class="caret "></i> Sort by </a>
 <ul class="dropdown-menu">
-<li><a href="" rel="nofollow">Relevance</a></li>
-<li><a href="" rel="nofollow">Date</a></li>
-<li><a href="" rel="nofollow">Company</a></li>
+	<li><a @if($sprice_for_view == 'l2h') 
+				style="color: green; font-weight: bold;" 
+			@endif
+			href="{{request()->fullUrlWithQuery(["sprice"=>"l2h"])}}"> 
+			<i class="fa fa-sort-amount-asc" aria-hidden="true"></i> Lowest to Highest
+		</a>
+	</li>
+	<li><a @if($sprice_for_view == 'h2l') 
+				style="color: green; font-weight: bold;" 
+			@endif
+			href="{{request()->fullUrlWithQuery(["sprice"=>"h2l"])}}"> 
+			<i class="fa fa-sort-amount-desc" aria-hidden="true"></i> Highest to Lowest
+		</a>
+	</li>
 </ul>
 </div>
 </li>

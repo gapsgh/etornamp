@@ -80,17 +80,14 @@
             </div>
         </nav>
         <br/>
-        <br/>
-        <br/>
 
         @yield('content')
     </div>
-    <br/>
-    <br/>
-    <br/>
+
     @include('site.site_footer')
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/my.js') }}"></script>
 </body>
 </html>

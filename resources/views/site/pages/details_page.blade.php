@@ -88,14 +88,40 @@
 </aside>
 <div class="ads-action">
 <ul class="list-border">
-<li><a href="#"> <i class=" fa fa-user"></i> More ads by User </a></li>
-<li><a href="#"> <i class="fa fa-share-alt"></i> Share ad </a></li>
-<li><a href="#reportAdvertiser" data-toggle="modal"> <i class="fa icon-info-circled-alt"></i> Report abuse </a></li>
+<li><a href="{{url(sprintf('/search?sid=%d&sname=%s',$product->company->id,$product->company->name))}}"> <i class=" fa fa-user"></i> More ads by User </a></li>
+<li>
+	<a href="#"> <i class="fa fa-share-alt"></i></a>
+
+	<a style="margin: 5px;" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(Request::url()) }}"  
+		target="_blank"> 
+		<i class="fa fa-facebook-square fa-2x"></i> 
+	</a>
+	<a style="margin: 5px;" href="https://twitter.com/intent/tweet?url={{ urlencode(Request::url()) }}"
+       target="_blank">
+        <i class="fa fa-twitter-square fa-2x"></i>
+    </a>
+    <a style="margin: 5px;" href="https://plus.google.com/share?url={{ urlencode(Request::url()) }}"
+       target="_blank">
+       <i class="fa fa-google-plus-square fa-2x"></i>
+    </a>
+    <a style="margin: 5px;" href="https://pinterest.com/pin/create/button/?{{ 
+        http_build_query([
+            'url' => urlencode(Request::url()),
+            'media' => url(product_images_large_path().$product->image[0]->image),
+            'description' => $product->name
+        ]) 
+        }}" target="_blank">
+        <i class="fa fa-pinterest-square fa-2x"></i>
+    </a>
+</li>
+{{-- <li><a href="#reportAdvertiser" data-toggle="modal"> <i class="fa icon-info-circled-alt"></i> Report abuse </a></li> --}}
 </ul>
 </div>
 </div>
 </div>
-<div class="content-footer text-left"><a class="btn  btn-primary" data-toggle="modal" href="#contactAdvertiser"><i class=" icon-mail-2"></i> Send a message </a> <a href="tel:{{$product->company->phone_number[0]->number}}" class="btn  btn-info"><i class=" icon-phone-1"></i> {{$product->company->phone_number[0]->number}}  Call Now</a></div>
+<div class="content-footer text-left">
+<a class="btn  btn-primary" data-toggle="modal" href="#contactAdvertiser"><i class=" icon-mail-2"></i> Send a message </a> 
+<a href="tel:{{$product->company->phone_number[0]->number}}" class="btn  btn-info"><i class=" icon-phone-1"></i> {{$product->company->phone_number[0]->number}}  Call Now</a></div>
 </div>
 </div>
  
@@ -211,7 +237,10 @@
 <h4 class="modal-title"><i class=" icon-mail-2"></i> Contact advertiser </h4>
 </div>
 <div class="modal-body">
-<form role="form">
+<h1>Feature coming soon</h1>
+<h3>Please call the seller with the button provided below</h3>
+<a href="tel:{{$product->company->phone_number[0]->number}}" class="btn  btn-primary"><i class=" icon-phone-1"></i> {{$product->company->phone_number[0]->number}}  Call Now</a>
+{{-- form role="form">
 <div class="form-group">
 <label for="recipient-name" class="control-label">Name:</label>
 <input class="form-control required" id="recipient-name" placeholder="Your name" data-placement="top" data-trigger="manual" data-content="Must be at least 3 characters long, and must only contain letters." type="text">
@@ -232,11 +261,11 @@
 <p class="help-block pull-left text-danger hide" id="form-error">&nbsp; The form is not
 valid. </p>
 </div>
-</form>
+</form> --}}
 </div>
 <div class="modal-footer">
 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-<button type="submit" class="btn btn-success pull-right">Send message!</button>
+{{-- <button type="submit" class="btn btn-success pull-right">Send message!</button> --}}
 </div>
 </div>
 </div>

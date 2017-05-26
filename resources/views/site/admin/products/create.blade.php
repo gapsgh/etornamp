@@ -13,6 +13,15 @@
 					<h2 class="title-2 uppercase"><strong> <i class="icon-docs"></i> Post Your Ghana Made Product/Service</strong></h2>
 					<div class="row">
 						<div class="col-sm-12">
+						@if (count($errors) > 0)
+		                    <div class="alert alert-danger">
+		                        <ul>
+		                            @foreach ($errors->all() as $error)
+		                                <li>{{ $error }}</li>
+		                            @endforeach
+		                        </ul>
+		                    </div>
+		                @endif
 							<form action="{{url('/products')}}" method="POST" class="form-horizontal" enctype="multipart/form-data">
 								{{ csrf_field() }}
 								<fieldset>	
@@ -36,7 +45,7 @@
 									<div class="form-group">
 										<label class="col-md-3 control-label" for="Adtitle">Ad title</label>
 										<div class="col-md-8">
-											<input id="Adtitle" name="name" placeholder="Ad title" class="form-control input-md" required="" type="text">
+											<input id="Adtitle" name="name" placeholder="Ad title" class="form-control input-md" required="" type="text" value="{{ old('name') }}">
 											<span class="help-block">Keep it short and simple </span>
 										</div>
 									</div>
@@ -56,7 +65,7 @@
 									<div class="form-group">
 										<label class="col-md-3 control-label" for="textarea">Describe ad </label>
 										<div class="col-md-8">
-											<textarea class="form-control" rows="10" id="textarea" name="description" placeholder="Describe what makes your ad unique"></textarea>
+											<textarea class="form-control" rows="10" id="textarea" name="description" placeholder="Describe what makes your ad unique">{{ old('description') }}</textarea>
 										</div>
 									</div>
 
@@ -65,13 +74,13 @@
 										<div class="col-md-4">
 											<div class="input-group mb10">
 												<span class="input-group-addon">GH¢</span>
-												<input id="Price" name="single_price" class="form-control" placeholder="Price" required="" type="number">
+												<input id="Price" name="single_price" class="form-control" placeholder="Price" required="" value="{{ old('single_price') }}" type="number" step="0.01" min="0">
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="input-group mb10">
 												<span class="input-group-addon">%Off</span>
-												<input id="Price" name="bonus_percentage_single" class="form-control" placeholder="Bonus Percentage" type="number">
+												<input id="Price" name="bonus_percentage_single" class="form-control" placeholder="Bonus Percentage" value="{{ old('bonus_percentage_single') }}" type="number" step="0.01" min="0">
 											</div>
 										</div>
 									</div>
@@ -81,13 +90,13 @@
 										<div class="col-md-4">
 											<div class="input-group mb10">
 												<span class="input-group-addon ">GH¢</span>
-												<input id="Price" name="bulk_price" class="form-control" placeholder="Bulk Price" type="number">
+												<input id="Price" name="bulk_price" class="form-control" placeholder="Bulk Price" type="number" value="{{ old('bulk_price') }}" step="0.01" min="0">
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="input-group mb10">
 												<span class="input-group-addon">%Off</span>
-												<input id="Price" name="bonus_percentage_bulk" class="form-control" placeholder="Bonus Percentage" type="number">
+												<input id="Price" name="bonus_percentage_bulk" class="form-control" placeholder="Bonus Percentage" type="number" value="{{ old('bonus_percentage_bulk') }}" step="0.01" min="0">
 											</div>
 										</div>
 									</div>
@@ -207,7 +216,7 @@
 											<label class="col-md-4 control-label"></label>
 											<div class="col-md-8">
 
-												<button type="submit" class="btn btn-success btn-lg">Submit Product</button>
+												<button id="Submitbutton" type="submit" class="btn btn-success btn-lg">Submit Product</button>
 												
 												<label class=" pull-right" for="RET">Save and return to this page?</label>
 												<input type="checkbox" id="RET" class="pull-right" name="return_to_page" value="1">

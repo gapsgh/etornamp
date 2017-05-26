@@ -90,9 +90,9 @@ class CategoryController extends Controller
                                     ->where('approval_status','1');
        
        //Apply the location filter if set
-        if(!empty($params['lid'])){
-            $location_id = $params['lid'];
-            $location_id_for_view = $params['lid'];
+        if(!empty($params['city'])){
+            $location_id = $params['city'];
+            $location_id_for_view = $params['city'];
             $products = $products->where('location_city',$location_id);
         }
 
@@ -160,14 +160,14 @@ class CategoryController extends Controller
     public function searchResults()
     {
         $params = Input::get();
-        if(empty($params['find'])){
-            return redirect('/')->with('success_message','please enter a search text');
-        }
-        if(!empty($params['find']) and trim($params['find']) == ""){
-            return redirect('/')->with('success_message','please enter a search text');
+
+        $slug = '';
+
+        if(!empty($params['find']) and trim($params['find']) != ""){
+            $slug = $params['find'];
         }
 
-        $slug = $params['find'];
+        
 
         $location_id_for_view = '';
         $seller_id_for_view = '';
@@ -184,9 +184,9 @@ class CategoryController extends Controller
                                     ->where('approval_status','1');
        
        //Apply the location filter if set
-        if(!empty($params['lid'])){
-            $location_id = $params['lid'];
-            $location_id_for_view = $params['lid'];
+        if(!empty($params['city'])){
+            $location_id = $params['city'];
+            $location_id_for_view = $params['city'];
             $products = $products->where('location_city',$location_id);
         }
 

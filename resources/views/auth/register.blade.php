@@ -3,10 +3,18 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading"><i class="icon-user-add"></i> PromoteGH Register An Account</div>
-                <div class="panel-body">
+            <div class="col-sm-9 col-md-7 login-box">
+                <div class="panel panel-default">
+                    <div class="panel-intro text-center">
+                        <h2 class="logo-title">
+                            
+                            <span class="logo-icon">
+                                <img src="{{url('assets/ico/logot.png')}}">
+                            </span>
+                        </h2>
+                    </div>
+
+                    <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
@@ -74,15 +82,23 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
+                                <button id="Submitbutton" type="submit" class="btn btn-primary">
+                                  <i class="icon-user-add"></i>  Register
                                 </button>
                             </div>
                         </div>
                     </form>
                 </div>
+                    <div class="panel-footer">
+                        <p class="text-center "><a href="{{url('/')}}"> Back to Website </a></p>
+                        <div style=" clear:both"></div>
+                    </div>
+                </div>
+                <div class="login-box-btm text-center">
+                    <p> Already have an account? <br>
+                    <a href="{{url('/login')}}"><strong>Login!</strong> </a></p>
+                </div>
+                </div>
             </div>
-        </div>
-    </div>
 </div>
 @endsection

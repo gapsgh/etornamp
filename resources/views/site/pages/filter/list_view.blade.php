@@ -30,7 +30,7 @@
 												src="@if( count($product->image) > 0 )
 													{{url(product_images_path().$product->image[0]->image)}}
 													@endif" alt="img">
-											
+
 										</a>
 									</div>
 								</div>
@@ -47,7 +47,7 @@
 												</span>
 												 <span class="date">
 												 	<i class=" icon-clock"> </i> {{Carbon\Carbon::parse($product->created_at)->diffForHumans()}} 
-												 </span> - <span class="category">{{$product->category->name}} </span>- 
+												 </span> - <strong><span class="category">{{$product->category->name}} </span></strong>- 
 												 <span class="item-location"><i class="fa fa-map-marker"></i> {{$product->producr_location_city->name}} </span> 
 											</span>
 										</div>

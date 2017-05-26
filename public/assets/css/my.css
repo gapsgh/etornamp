@@ -34,6 +34,10 @@
     position: relative;
     width: 100px;
 }
+
+.location-li:hover{
+  background-color: rgba(0, 128, 0, 0.03);
+}
 /*$grey: #cacaca;
 
 #page_container {

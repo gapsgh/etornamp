@@ -12,6 +12,7 @@ use App\ProductVisitors;
 use App\Location;
 use Image;
 use Illuminate\Support\Facades\File;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -68,26 +69,10 @@ class ProductController extends Controller
         // dd($categories);
         
         //Collect the lacations
-        $locations = $this->getLocations();
+        $locations = getLocations();
 
         return view('site.admin.products.create',compact('categories','company_details','locations'));
     }
-
-
-
-    public function getLocations()
-    {
-        //Collect the lacations
-        $locations_raw = Location::where('level',1)->get()->toArray();
-        $locations = [];
-        foreach ($locations_raw as $key => $location) {
-            $sub_locations = Location::where('level',2)->where('parent_id',$location['id'])->get()->toArray();
-            $location['sub_locations'] = $sub_locations;
-            $locations[] = $location;
-        }
-        return $locations;
-    }
-
 
 
     /**
@@ -96,7 +81,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         //
         // dd($request->all());
@@ -330,7 +315,7 @@ class ProductController extends Controller
         }
 
         //Collect the lacations
-        $locations = $this->getLocations();
+        $locations = getLocations();
         
         return view('site.admin.products.edit',compact('product','product_images','categories','locations'));
     }

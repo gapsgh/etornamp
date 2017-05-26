@@ -138,7 +138,7 @@
 											</div>
 											<div style="clear:both"></div>
 											
-											<button type="submit" class="btn btn-primary">
+											<button id="Submitbutton" type="submit" class="btn btn-primary">
 												Create Business Profile
 											</button>
 										</div>
@@ -182,6 +182,7 @@
 @stop
 
 @section('scripts')
+<script type="text/javascript" src="{{asset('/assets/js/map_init_function.js')}}"></script>
 <?php 
 		if(session('info_message')){
 			?>

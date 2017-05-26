@@ -310,6 +310,7 @@
 @stop
 
 @section('scripts')
+<script type="text/javascript" src="{{asset('/assets/js/map_init_function.js')}}"></script>
 <?php 
 		if(session('success_message')){
 			?>

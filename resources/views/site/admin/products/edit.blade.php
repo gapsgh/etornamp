@@ -69,13 +69,13 @@
 										<div class="col-md-4">
 											<div class="input-group mb10">
 												<span class="input-group-addon">GH¢</span>
-												<input id="Price" value="{{$product['single_price']}}" name="single_price" class="form-control" placeholder="Price" required="" type="number">
+												<input id="Price" value="{{$product['single_price']}}" name="single_price" class="form-control" placeholder="Price" required="" type="number" step="0.01" min="0">
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="input-group mb10">
 												<span class="input-group-addon">%Off</span>
-												<input id="Price" value="{{$product['bonus_percentage_single']}}" name="bonus_percentage_single" class="form-control" placeholder="Bonus Percentage" type="number">
+												<input id="Price" value="{{$product['bonus_percentage_single']}}" name="bonus_percentage_single" class="form-control" placeholder="Bonus Percentage" type="number" step="0.01" min="0">
 											</div>
 										</div>
 									</div>
@@ -85,13 +85,13 @@
 										<div class="col-md-4">
 											<div class="input-group mb10">
 												<span class="input-group-addon ">GH¢</span>
-												<input id="Price" value="{{$product['bulk_price']}}" name="bulk_price" class="form-control" placeholder="Bulk Price" type="number">
+												<input id="Price" value="{{$product['bulk_price']}}" name="bulk_price" class="form-control" placeholder="Bulk Price" type="number" step="0.01" min="0">
 											</div>
 										</div>
 										<div class="col-md-4">
 											<div class="input-group mb10">
 												<span class="input-group-addon">%Off</span>
-												<input id="Price" value="{{$product['bonus_percentage_bulk']}}" name="bonus_percentage_bulk" class="form-control" placeholder="Bonus Percentage" type="number">
+												<input id="Price" value="{{$product['bonus_percentage_bulk']}}" name="bonus_percentage_bulk" class="form-control" placeholder="Bonus Percentage" type="number" step="0.01" min="0">
 											</div>
 										</div>
 									</div>
@@ -285,7 +285,7 @@
 											<label class="col-md-4 control-label"></label>
 											<div class="col-md-8">
 
-												<button type="submit" class="btn btn-success btn-lg">Submit Product</button>
+												<button id="Submitbutton" type="submit" class="btn btn-success btn-lg">Submit Product</button>
 												
 											</div>
 										</div>

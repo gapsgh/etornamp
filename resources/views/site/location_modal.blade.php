@@ -32,7 +32,10 @@
 										<div class="panel-body">
 											@foreach($main_location['sub_locations'] as $key => $sub_location)
 											<ul>
-												<li style="padding: 6px 0px 6px 0px; border-bottom: 1px solid rgba(128, 128, 128, 0.18);">
+												<li class="location-li" style="padding: 6px 0px 6px 0px; border-bottom: 1px solid rgba(128, 128, 128, 0.18);" 
+													onclick="$('#location_city').val('{{$sub_location['id']}}'); 
+															 $('#company_location').val('{{$sub_location['name']}}'); 
+															 $('#changeLocation').modal('hide');">
 													<span class="location_li" data-original="{{$sub_location['name']}}">
 														{{$sub_location['name']}} 
 													</span>
